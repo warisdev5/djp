@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 			<div class="box-body">
                                 
-				<table id="cities-table" class="table table-striped table-hover table-condensed">
+				<table id="record-table" class="table table-striped table-hover table-condensed">
                 	<thead>
                     	<tr>
                         	<th>Sr.No</th>
@@ -52,10 +52,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     
 <script>
 	$(document).ready(function(){
-	    $('#category-table').DataTable({
+	    $('#record-table').DataTable({
 	      'paging'      : true,
-	      'lengthChange': false,
-	      'searching'   : false,
+	      'lengthChange': true,
+	      'searching'   : true,
 	      'ordering'    : true,
 	      'info'        : true,
 	      'autoWidth'   : false

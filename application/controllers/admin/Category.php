@@ -38,10 +38,6 @@ class Category extends Admin_Controller {
         {
         	$cat->sub_categories = $this->category_model->getCategoryForParentId($cat->id);
         }
-        
-//         echo '<pre>';
-//         var_dump($this->data['categories']);
-//         die();
 
 		/* Load Template */
 		$this->template->admin_render('admin/category/index', $this->data);
@@ -56,7 +52,7 @@ class Category extends Admin_Controller {
 		$this->data['sub_title'] = lang('menu_category_add');
 		
 		// load js files in array
-		$this->data['custom_js'] = array('/adminlte/js/custom.js','/select2/js/select2.full.min.js');
+		$this->data['custom_js'] = array('/select2/js/select2.full.min.js');
 		// load css files
 		$this->data['css_files'] = array('/select2/css/select2.min.css');
 		
@@ -85,7 +81,7 @@ class Category extends Admin_Controller {
 			$this->data['sub_title'] = lang('menu_category_edit');
 			
 			// load js files in array
-			$this->data['custom_js'] = array('/adminlte/js/custom.js','/select2/js/select2.full.min.js');
+			$this->data['custom_js'] = array('/select2/js/select2.full.min.js');
 			// load css files
 			$this->data['css_files'] = array('/select2/css/select2.min.css');
 			
@@ -107,9 +103,6 @@ class Category extends Admin_Controller {
 				'sorting'	=> strip_tags($this->input->post('sorting', TRUE))
 		);
 		
-// 		var_dump($data);
-// 		die();
-		
 		$this->form_validation->set_rules('cat_name', 'category', 'required|callback_check_unique_category['.$data['id'].']');
 		$this->form_validation->set_rules('case_type_id', 'category type', 'required');
 		
@@ -128,7 +121,7 @@ class Category extends Admin_Controller {
 			}
 			
 			// load js files in array
-			$this->data['js_files'] = array('/adminlte/js/custom.js','/select2/js/select2.full.min.js');
+			$this->data['custom_js'] = array('/select2/js/select2.full.min.js');
 			// load css files
 			$this->data['css_files'] = array('/select2/css/select2.min.css');
 			

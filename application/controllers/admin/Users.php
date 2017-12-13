@@ -102,7 +102,8 @@ class Users extends Admin_Controller {
 		$this->form_validation->set_rules('username', 'lang:users_username', 'required|is_unique['.$tables['users'].'.username]');
 		$this->form_validation->set_rules('email', 'lang:users_email', 'required|valid_email|is_unique['.$tables['users'].'.email]');
 		$this->form_validation->set_rules('phone', 'lang:users_phone', 'required');
-		$this->form_validation->set_rules('company', 'lang:users_company', 'required');
+// 		$this->form_validation->set_rules('company', 'lang:users_company', 'required');
+		$this->form_validation->set_rules('city_id', 'lang:users_city', 'required');
 		$this->form_validation->set_rules('password', 'lang:users_password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
 		$this->form_validation->set_rules('password_confirm', 'lang:users_password_confirm', 'required');
 
@@ -119,6 +120,7 @@ class Users extends Admin_Controller {
 				'last_name'  => $this->input->post('last_name'),
 				'company'    => $this->input->post('company'),
 				'phone'      => $this->input->post('phone'),
+				'city_id'	 => $this->input->post('city_id'),
 			);
 		}
 
@@ -170,8 +172,9 @@ class Users extends Admin_Controller {
 			$this->data['phone'] = array(
 				'name'  => 'phone',
 				'id'    => 'phone',
-				'type'  => 'tel',
-                'pattern' => '^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$',
+				'type'  => 'text',
+				'data-inputmask'=> "'mask': '9999-9999999'",
+				'data-mask' => '',
                 'class' => 'form-control',
 				'value' => $this->form_validation->set_value('phone'),
 			);
@@ -191,12 +194,12 @@ class Users extends Admin_Controller {
 			);
 			
 			/* Dropdown list */
-// 			$this->data['cities'] = $this->districts_model->getCityForParentId($id=0);
+			$this->data['cities'] = $this->districts_model->getCityForParentId($id=0);
 			
 			// load js files in array
-			$this->data['custom_js'] = array('/adminlte/js/custom.js','/select2/dist/js/select2.full.min.js');
+			$this->data['custom_js'] = array('/input-mask/jquery.inputmask.js','/bootstrap-select/dist/js/bootstrap-select.min.js');
 			// load css files
-			$this->data['css_files'] = array('/select2/dist/css/select2.min.css');
+			$this->data['css_files'] = array('/bootstrap-select/dist/css/bootstrap-select.min.css');
 
             /* Load Template */
             $this->template->admin_render('admin/users/create', $this->data);
@@ -209,7 +212,6 @@ class Users extends Admin_Controller {
         /* Load Template */
 		$this->template->admin_render('admin/users/delete', $this->data);
 	}
-
 
 	public function edit($id)
 	{
@@ -238,7 +240,8 @@ class Users extends Admin_Controller {
 		$this->form_validation->set_rules('first_name', 'lang:edit_user_validation_fname_label', 'required');
 		$this->form_validation->set_rules('last_name', 'lang:edit_user_validation_lname_label', 'required');
 		$this->form_validation->set_rules('phone', 'lang:edit_user_validation_phone_label', 'required');
-		$this->form_validation->set_rules('company', 'lang:edit_user_validation_company_label', 'required');
+// 		$this->form_validation->set_rules('company', 'lang:edit_user_validation_company_label', 'required');
+		$this->form_validation->set_rules('city_id', 'lang:users_city', 'required');
 
 		if (isset($_POST) && ! empty($_POST))
 		{
@@ -271,7 +274,8 @@ class Users extends Admin_Controller {
 					'username'	 => $this->input->post('username'),
 					'email'		 =>  $this->input->post('email'),
 					'company'    => $this->input->post('company'),
-					'phone'      => $this->input->post('phone')
+					'phone'      => $this->input->post('phone'),
+					'city_id'	 => $this->input->post('city_id'),
 				);
 
                 if ($this->input->post('password'))
@@ -378,8 +382,9 @@ class Users extends Admin_Controller {
 		$this->data['phone'] = array(
 			'name'  => 'phone',
 			'id'    => 'phone',
-            'type'  => 'tel',
-            'pattern' => '^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$',
+			'type'  => 'text',
+			'data-inputmask'=> "'mask': '9999-9999999'",
+			'data-mask' => '',
             'class' => 'form-control',
 			'value' => $this->form_validation->set_value('phone', $user->phone)
 		);
@@ -395,11 +400,18 @@ class Users extends Admin_Controller {
             'class' => 'form-control',
 			'type' => 'password'
 		);
+		
+		/* Dropdown list */
+		$this->data['cities'] = $this->districts_model->getCityForParentId($id=0);
+			
+		// load js files in array
+		$this->data['custom_js'] = array('/input-mask/jquery.inputmask.js','/bootstrap-select/dist/js/bootstrap-select.min.js');
+		// load css files
+		$this->data['css_files'] = array('/bootstrap-select/dist/css/bootstrap-select.min.css');
 
         /* Load Template */
 		$this->template->admin_render('admin/users/edit', $this->data);
 	}
-
 
 	function activate($id, $code = FALSE)
 	{

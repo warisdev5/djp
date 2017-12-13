@@ -55,4 +55,32 @@ class Core_model extends CI_Model {
     	$result = $query->result();
     	return $result;
     }
+    
+    function getLoggin_userGroup( $user_id, $city_id)
+    {
+    	$where = array('users.id' => $user_id, 'users.city_id' => $city_id);
+    	
+    	$this->db->select('groups.name');
+    	$this->db->from('groups');
+    	$this->db->join('users_groups', 'groups.id = users_groups.group_id');
+    	$this->db->join('users', 'users.id = users_groups.user_id');
+    	$this->db->where($where);
+    	
+    	$query = $this->db->get();
+    	$result = $query->row();
+    	return $result;
+    }
+    
+    function getUsersByCityId($city_id)
+    {
+    	$this->db->select('users.*');
+    	$this->db->from('groups');
+    	$this->db->join('users_groups', 'groups.id = users_groups.group_id');
+    	$this->db->join('users', 'users.id = users_groups.user_id');
+    	$this->db->where('users.city_id', $city_id);
+    	$this->db->order_by('users.id asc');
+    	$query = $this->db->get();
+    	$result = $query->result();
+    	return $result;
+    }
 }

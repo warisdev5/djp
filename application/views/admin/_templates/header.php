@@ -7,7 +7,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <head>
         <meta charset="<?php echo $charset; ?>">
         <title><?php echo $title; ?></title>
-
+<?php if ($mobile === FALSE): ?>
+        <!--[if IE 8]>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <![endif]-->
+<?php else: ?>
+        <meta name="HandheldFriendly" content="true">
+<?php endif; ?>
 <?php if ($mobile == TRUE && $mobile_ie == TRUE): ?>
         <meta http-equiv="cleartype" content="on">
 <?php endif; ?>
@@ -44,6 +50,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <link rel="stylesheet" href="<?php echo base_url($plugins_dir . '/colorpickersliders/colorpickersliders.min.css'); ?>">
 <?php endif; ?>
         <link rel="stylesheet" href="<?php echo base_url($frameworks_dir . '/domprojects/css/dp.min.css'); ?>">
+        <script src="<?php echo base_url($frameworks_dir . '/jquery/jquery.min.js'); ?>"></script>
+        <script src="<?php echo base_url($frameworks_dir . '/bootstrap/js/bootstrap.min.js'); ?>"></script>
 <?php if ($mobile === FALSE): ?>
         <!--[if lt IE 9]>
             <script src="<?php echo base_url($plugins_dir . '/html5shiv/html5shiv.min.js'); ?>"></script>

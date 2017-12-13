@@ -42,13 +42,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											<label class="col-sm-4 control-label">City</label>
 											<div class="col-sm-8">
 												<?php 
-// 													$options = array();
-// 													$options[''] = 'None';
-// 													foreach ($cities as $city) {
-// 														$options[$city->id] = $city->city_name;
-// 													}
-// 													echo form_dropdown('district_id', $options, set_value('district_id'),
-// 														array('class' => 'form-control select2 col-sm-4'));
+													$options = array();
+													$options[''] = 'None';
+													foreach ($cities as $city) {
+														$options[$city->id] = $city->city_name;
+													}
+													echo form_dropdown('city_id', $options, set_value('city_id'),
+														array('class' => 'form-control col-sm-4 selectpicker', 'data-live-search' => 'true'));
 												?>
 											</div>
 										</div>
@@ -67,7 +67,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <div class="form-group">
                                             <?php echo lang('users_phone', 'phone', array('class' => 'col-sm-4 control-label')); ?>
                                             <div class="col-sm-8">
-                                                <?php echo form_input($phone);?>
+                                            	<div class="input-group">
+                                            		<div class="input-group-addon"><i class="fa fa-phone"></i></div>
+                                                	<?php echo form_input($phone);?>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -99,3 +102,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                          </div>
                     </div>
+<script>
+$(document).ready(function(){
+	$('[data-mask]').inputmask();
+	// select search
+    $('.select2').select2();
+});
+</script>

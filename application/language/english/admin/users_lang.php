@@ -28,6 +28,7 @@ $lang['users_member_of_groups']    = 'Member of groups';
 $lang['users_password']            = 'Password';
 $lang['users_password_confirm']    = 'Password confirm';
 $lang['users_phone']               = 'Phone';
+$lang['users_city']                = 'City';
 $lang['users_status']              = 'Status';
 $lang['users_username']            = 'User name';
 

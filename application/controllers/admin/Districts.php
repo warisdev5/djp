@@ -38,10 +38,6 @@ class Districts extends Admin_Controller {
         	$city->tehsils = $this->districts_model->getCityForParentId($city->id);
         }
         
-//         echo '<pre>';
-//         var_dump($this->data['cities']);
-//         die();
-
 		/* Load Template */
 		$this->template->admin_render('admin/districts/index', $this->data);
 	}
@@ -55,7 +51,7 @@ class Districts extends Admin_Controller {
 		$this->data['sub_title'] = lang('menu_city_add');
 		
 		// load js files in array
-		$this->data['custom_js'] = array('/adminlte/js/custom.js','/select2/js/select2.full.min.js');
+		$this->data['custom_js'] = array('/select2/js/select2.full.min.js');
 		// load css files
 		$this->data['css_files'] = array('/select2/css/select2.min.css');
 		
@@ -84,7 +80,7 @@ class Districts extends Admin_Controller {
 			$this->data['sub_title'] = lang('menu_city_edit');
 				
 			// load js files in array
-			$this->data['custom_js'] = array('/adminlte/js/custom.js','/select2/js/select2.full.min.js');
+			$this->data['custom_js'] = array('/select2/js/select2.full.min.js');
 			// load css files
 			$this->data['css_files'] = array('/select2/css/select2.min.css');
 				
@@ -105,9 +101,6 @@ class Districts extends Admin_Controller {
 				'sorting'	=> strip_tags($this->input->post('sorting', TRUE))
 		);
 		
-// 		var_dump($data);
-// 		die();
-		
 		$this->form_validation->set_rules('city_name', 'city name', 'required|callback_check_unique_city['.$data['id'].']');
 		
 		if ($this->form_validation->run() == FALSE)
@@ -116,7 +109,7 @@ class Districts extends Admin_Controller {
 			$this->data['breadcrumb'] = $this->breadcrumbs->show();
 			
 			// load js files in array
-			$this->data['custom_js'] = array('/adminlte/js/custom.js','/select2/js/select2.full.min.js');
+			$this->data['custom_js'] = array('/select2/js/select2.full.min.js');
 			// load css files
 			$this->data['css_files'] = array('/select2/css/select2.min.css');
 			

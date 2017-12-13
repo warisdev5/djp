@@ -78,7 +78,7 @@ class Admin_Controller extends MY_Controller
 		{
 			if ( ! $this->ion_auth->in_group($this->data['admin_n_super']) )
 			{
-				redirect('users/district', 'refresh');
+				redirect('district/dashboard', 'refresh');
 			}
 			else
 			{
@@ -138,12 +138,14 @@ class District_Controller extends MY_Controller
 				$this->load->config('admin/dp_config');
 				$this->load->library('admin/page_title');
 				$this->load->library('admin/breadcrumbs');
+				$this->load->model('core_model');
+				$this->load->model('admin/districts_model');
 				// 		$this->load->model('admin/core_model');
 				$this->load->helper('menu');
-				$this->lang->load(array('admin/main_header', 'district/main_sidebar', 'admin/footer'));
+				$this->lang->load(array('admin/main_header', 'district/main_sidebar', 'admin/footer', 'admin/actions'));
 					
 				/* Load library function  */
-				$this->breadcrumbs->unshift(0, $this->lang->line('menu_dashboard'), 'district/users');
+				$this->breadcrumbs->unshift(0, $this->lang->line('menu_dashboard'), 'district/dashboard');
 					
 				/* Data */
 				$this->data['title']       = $this->config->item('title');

@@ -50,7 +50,7 @@ class Auth extends MY_Controller {
                 $remember = (bool) $this->input->post('remember');
                 if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
                 {
-//                 	echo 'you are remember login';
+//                 	echo 'you are login';
 //                 	die();
                 	
                     if ( ! $this->ion_auth->in_group($this->data['admin_n_super']) AND $this->ion_auth->in_group($this->data['district_n_members'])  )
@@ -59,7 +59,7 @@ class Auth extends MY_Controller {
 //                     	die();
 
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
-                        redirect('district/users', 'refresh');
+                        redirect('district/dashboard', 'refresh');
                     }
                     else
                     {                    	
@@ -79,8 +79,8 @@ class Auth extends MY_Controller {
                 }
                 else
                 {
-                	echo 'your are login as super user';
-                	die();
+//                 	echo 'your are not login';
+//                 	die();
                 	
                     $this->session->set_flashdata('message', $this->ion_auth->errors());
 				    redirect('auth/login', 'refresh');

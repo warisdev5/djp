@@ -31,18 +31,9 @@ class Courts extends Admin_Controller {
 		$this->data['breadcrumb'] = $this->breadcrumbs->show();
 
 		$this->data['sub_title'] = lang('menu_courts_list');
-
+		
 		/* Data */
 		$this->data['judges'] = $this->courts_model->getJudges();
-            
-//         foreach ($this->data['categories'] as $cat)
-//         {
-//         	$cat->sub_categories = $this->category_model->getCategoryForParentId($cat->id);
-//         }
-        
-//         echo '<pre>';
-//         var_dump($this->data['categories']);
-//         die();
 
 		/* Load Template */
 		$this->template->admin_render('admin/courts/judges/index', $this->data);
@@ -63,10 +54,6 @@ class Courts extends Admin_Controller {
 		/* Data */
 		$this->data['judges'] = $this->courts_model->getJudges();
 	
-// 		        echo '<pre>';
-// 		        var_dump($this->data['judges']);
-// 		        die();
-	
 		/* Load Template */
 		$this->template->admin_render('admin/courts/judges/index', $this->data);
 	}
@@ -80,7 +67,7 @@ class Courts extends Admin_Controller {
 		$this->data['sub_title'] = lang('menu_judge_add');
 	
 		// load js files in array
-		$this->data['custom_js'] = array('/adminlte/js/custom.js','/select2/js/select2.full.min.js','/bootstrap-datepicker/js/bootstrap-datepicker.min.js');
+		$this->data['custom_js'] = array('/select2/js/select2.full.min.js','/bootstrap-datepicker/js/bootstrap-datepicker.min.js');
 		// load css files
 		$this->data['css_files'] = array('/select2/css/select2.min.css','/bootstrap-datepicker/css/bootstrap-datepicker.min.css');
 		
@@ -114,7 +101,7 @@ class Courts extends Admin_Controller {
 			$this->data['sub_title'] = lang('menu_judge_edit');
 	
 			// load js files in array
-			$this->data['custom_js'] = array('/adminlte/js/custom.js','/select2/js/select2.full.min.js','/bootstrap-datepicker/js/bootstrap-datepicker.min.js');
+			$this->data['custom_js'] = array('/select2/js/select2.full.min.js','/bootstrap-datepicker/js/bootstrap-datepicker.min.js');
 			// load css files
 			$this->data['css_files'] = array('/select2/css/select2.min.css','/bootstrap-datepicker/css/bootstrap-datepicker.min.css');
 			
@@ -165,7 +152,7 @@ class Courts extends Admin_Controller {
 			}
 	
 			// load js files in array
-			$this->data['custom_js'] = array('/adminlte/js/custom.js','/select2/js/select2.full.min.js','/bootstrap-datepicker/js/bootstrap-datepicker.min.js');
+			$this->data['custom_js'] = array('/select2/js/select2.full.min.js','/bootstrap-datepicker/js/bootstrap-datepicker.min.js');
 			// load css files
 			$this->data['css_files'] = array('/select2/css/select2.min.css','/bootstrap-datepicker/css/bootstrap-datepicker.min.css');
 			
@@ -174,10 +161,6 @@ class Courts extends Admin_Controller {
 			$this->data['cities'] = $this->districts_model->getCityForParentId($id=0);
 	
 			$this->data['item'] = (object) $data;
-				
-			// 					echo '<pre>';
-			// 					var_dump($data);
-			// 					die();
 	
 			/* Load Template */
 			$this->template->admin_render('admin/courts/judges/add_judge', $this->data);
@@ -214,10 +197,6 @@ class Courts extends Admin_Controller {
 		/* Data */
 		$this->data['designations'] = $this->courts_model->getDesignations();
 	
-		//         echo '<pre>';
-		//         var_dump($this->data['categories']);
-		//         die();
-	
 		/* Load Template */
 		$this->template->admin_render('admin/courts/designation/index', $this->data);
 	}
@@ -245,9 +224,6 @@ class Courts extends Admin_Controller {
 		
 		$this->data['sub_title'] = lang('menu_desgn_add');
 		
-		// load js files in array
-		$this->data['custom_js'] = array('/adminlte/js/custom.js');
-		
 		/* Load Template */
 		$this->template->admin_render('admin/courts/designation/add_desgn', $this->data);
 	}
@@ -270,9 +246,6 @@ class Courts extends Admin_Controller {
 				
 			$this->data['sub_title'] = lang('menu_desgn_edit');
 				
-			// load js files in array
-			$this->data['custom_js'] = array('/adminlte/js/custom.js');
-				
 			/* Load Template */
 			$this->template->admin_render('admin/courts/designation/add_desgn', $this->data);
 		}
@@ -287,10 +260,6 @@ class Courts extends Admin_Controller {
 				'active' 			=> strip_tags($this->input->post('active', TRUE)),
 				'sorting'			=> strip_tags($this->input->post('sorting', TRUE))
 		);
-	
-// 		echo '<pre>';		
-// 		var_dump($data);
-// 		die();
 	
 		$this->form_validation->set_rules('desgn_name', 'designation', 'required|callback_check_unique_designation['.$data['desgn_id'].']');
 		$this->form_validation->set_rules('desgn_short_name', 'designation short name', 'required');
@@ -308,20 +277,9 @@ class Courts extends Admin_Controller {
 			{
 				$this->data['sub_title'] = lang('menu_desgn_edit');
 			}
-				
-			// load js files in array
-			$this->data['js_files'] = array('/adminlte/js/custom.js');
-				
-// 			$this->data['cats'] = $this->category_model->get_dropdown_cats_list();
-				
+	
 			$this->data['item'] = (object) $data;
-			
-// 					echo '<pre>';
-// 					var_dump($data);
-// 					die();
-			
-			
-				
+
 			/* Load Template */
 			$this->template->admin_render('admin/courts/designation/add_desgn', $this->data);
 		}
@@ -341,131 +299,4 @@ class Courts extends Admin_Controller {
 			redirect('admin/courts/add_designation');
 		}
 	}
-	
-	public function add()
-	{
-		/* Breadcrumbs */
-		$this->breadcrumbs->unshift(2, lang('menu_category_add'), 'admin/category/add');
-		$this->data['breadcrumb'] = $this->breadcrumbs->show();
-	
-		$this->data['sub_title'] = lang('menu_desgn_add');
-	
-		// load js files in array
-		$this->data['custom_js'] = array('/adminlte/js/custom.js','/select2/js/select2.full.min.js');
-		// load css files
-		$this->data['css_files'] = array('/select2/css/select2.min.css');
-	
-		$this->data['cats'] = $this->category_model->get_dropdown_cats_list();
-	
-		/* Load Template */
-		$this->template->admin_render('admin/category/add_cat', $this->data);
-	}
-	
-	
-	
-	public function edit($id = null)
-	{
-		$this->data['item'] = $this->category_model->getCategoryForEdit($id);
-		
-		if ( !$id OR empty($this->data['item']) )
-		{
-			$this->session->set_flashdata('message','This record not found!');
-			$this->session->set_flashdata('message_type','warning');
-			redirect('admin/category', 'refresh');
-		}
-		else
-		{			
-			/* Breadcrumbs */
-			$this->breadcrumbs->unshift(2, lang('menu_category_edit'), 'admin/category/edit');
-			$this->data['breadcrumb'] = $this->breadcrumbs->show();
-			
-			$this->data['sub_title'] = lang('menu_category_edit');
-			
-			// load js files in array
-			$this->data['custom_js'] = array('/adminlte/js/custom.js','/select2/js/select2.full.min.js');
-			// load css files
-			$this->data['css_files'] = array('/select2/css/select2.min.css');
-			
-			$this->data['cats'] = $this->category_model->get_dropdown_cats_list();
-			
-			/* Load Template */
-			$this->template->admin_render('admin/category/add_cat', $this->data);
-		}
-	}
-	
-	public function save()
-	{
-		$data = array(
-				'id' 		=> strip_tags($this->input->post('id', TRUE)),
-				'cat_name' 	=> strip_tags(trim($this->input->post('cat_name', TRUE))),
-				'case_type_id'	=> strip_tags(trim($this->input->post('case_type_id', TRUE))),
-				'cat_id' 	=> strip_tags(trim($this->input->post('cat_id', TRUE))),
-				'active' 	=> strip_tags($this->input->post('active', TRUE)),
-				'sorting'	=> strip_tags($this->input->post('sorting', TRUE))
-		);
-		
-// 		var_dump($data);
-// 		die();
-		
-		$this->form_validation->set_rules('cat_name', 'category', 'required|callback_check_unique_category['.$data['id'].']');
-		$this->form_validation->set_rules('case_type_id', 'category type', 'required');
-		
-		if ($this->form_validation->run() == FALSE)
-		{
-// 			/* Breadcrumbs */
-			$this->data['breadcrumb'] = $this->breadcrumbs->show();
-			
-			if ($data['id']==0)
-			{
-				$this->data['sub_title'] = lang('menu_category_add');
-			}
-			else 
-			{
-				$this->data['sub_title'] = lang('menu_category_edit');
-			}
-			
-			// load js files in array
-			$this->data['js_files'] = array('/adminlte/js/custom.js','/select2/dist/js/select2.full.min.js');
-			// load css files
-			$this->data['css_files'] = array('/select2/dist/css/select2.min.css');
-			
-			$this->data['cats'] = $this->category_model->get_dropdown_cats_list();
-			
-			$this->data['item'] = (object) $data;
-			
-			/* Load Template */
-			$this->template->admin_render('admin/category/add_cat', $this->data);
-		}
-		else 
-		{
-			if($this->category_model->save($data) > 0)
-			{
-				$this->session->set_flashdata('message','The category have saved!');
-				$this->session->set_flashdata('message_type','success');
-			}
-			else
-			{
-				$this->session->set_flashdata('message','The category could not be saved!');
-				$this->session->set_flashdata('message_type','warning');
-			}
-			
-			redirect('admin/category/add');
-		}
-	}
-	
-	function check_unique_category($value, $id)
-	{
-		$this->form_validation->set_message('check_unique_category','The category name is already exist!');
-	
-		$catNames = $this->category_model->check_unique_category($id);
-	
-		if ( array_key_exists ( $value, $catNames ) ) {
-	
-			return false;
-	
-		} else {
-			return true;
-		}
-	}
-	
 }

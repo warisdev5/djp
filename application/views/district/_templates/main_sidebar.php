@@ -39,10 +39,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </li>
 
                         <li class="header text-uppercase"><?php echo lang('menu_main_navigation'); ?></li>
-                        <li class="<?=active_link_controller('users')?>">
-                            <a href="<?php echo site_url('district/users'); ?>">
+                        
+                        <li class="<?=active_link_controller('dashboard')?>">
+                            <a href="<?php echo site_url('district/dashboard'); ?>">
                                 <i class="fa fa-dashboard"></i> <span><?php echo lang('menu_dashboard'); ?></span>
                             </a>
+                        </li>
+                        
+                        <li class="treeview <?=active_link_controller('users')?><?=active_link_controller('groups')?>">
+                            <a href="#">
+                                <i class="fa fa-users"></i><span><?php echo lang('menu_users'); ?></span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="<?=active_link_controller('users')?>"><a href="<?php echo site_url('district/users'); ?>"><i class="fa fa-users"></i><?php echo lang('menu_users_list'); ?></a></li>
+                            </ul>
                         </li>
       
 

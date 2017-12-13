@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 12, 2017 at 08:44 AM
+-- Generation Time: Dec 13, 2017 at 02:12 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -59,7 +59,7 @@ CREATE TABLE `categories` (
   `case_type_id` tinyint(4) NOT NULL,
   `cat_id` int(11) NOT NULL,
   `active` varchar(10) NOT NULL,
-  `sorting` int(11) NOT NULL
+  `sorting` mediumint(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -103,7 +103,7 @@ CREATE TABLE `designation` (
   `desgn_id` int(11) NOT NULL,
   `desgn_name` varchar(100) NOT NULL,
   `desgn_short_name` varchar(10) NOT NULL,
-  `sorting` int(11) NOT NULL,
+  `sorting` smallint(6) NOT NULL,
   `active` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -133,9 +133,9 @@ INSERT INTO `designation` (`desgn_id`, `desgn_name`, `desgn_short_name`, `sortin
 CREATE TABLE `districts` (
   `id` int(11) NOT NULL,
   `city_name` varchar(50) NOT NULL,
-  `city_id` int(11) NOT NULL,
+  `city_id` smallint(6) NOT NULL,
   `active` varchar(10) NOT NULL,
-  `sorting` int(11) NOT NULL
+  `sorting` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -160,8 +160,8 @@ INSERT INTO `districts` (`id`, `city_name`, `city_id`, `active`, `sorting`) VALU
 
 CREATE TABLE `districts_users` (
   `id` int(11) NOT NULL,
-  `district_user_id` tinyint(4) NOT NULL,
-  `district_id` tinyint(4) NOT NULL
+  `user_id` mediumint(9) NOT NULL,
+  `district_id` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -306,34 +306,41 @@ CREATE TABLE `users` (
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
   `company` varchar(100) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL
+  `phone` varchar(20) DEFAULT NULL,
+  `city_id` mediumint(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'ubbKewRMYv31hKaEQcspdO', 1268889823, 1513060703, 1, 'Admin', 'istrator', 'ADMIN', '0'),
-(2, '::1', 'waris', '$2y$08$T/J0wxK/karJnDpatdPCs.ddOj49k35Nel9Gc73MDa69O4w9/lcNO', NULL, 'user@admin.com', NULL, NULL, NULL, 'TkFkFCz9BRUYpPf7zEoGsO', 1512553577, 1512663067, 1, 'Malik1', 'Waris1', 'DSC Fsd1', '03007201629'),
-(3, '::1', '', '$2y$08$ufAZIb7A2O.EgRidvi0a1OLQifH5T0JdbAdXF/X3GLd0T3OZCzxh2', NULL, 'super@admin.com', NULL, NULL, NULL, 'U9F82jQp08YIHehPODXfue', 1512570361, 1512581093, 1, 'User', 'Super', 'DSC Fsd', '03139201629'),
-(4, '::1', 'Faisalabad', '$2y$08$a5lwTHew70EOnuKlStDfcuXfIzQOaP.eNMfeXzRHQsWmbzPDGit2q', NULL, 'faisalabad@admin.com', NULL, NULL, NULL, NULL, 1512972787, 1512982640, 1, 'Faisalabad', 'Fsd', 'Faisalabad', '03007201629'),
-(5, '::1', 'ishfaq', '$2y$08$aFiAevMocfM9cabNMIICGugvGLnlwYmkY9G5itGQxzOJtEjN3ZE12', NULL, 'ishfaq11@admin.com', NULL, NULL, NULL, NULL, 1512976414, NULL, 1, 'Muhammad', 'Ishfaq', 'Faisalabad', '03007373777'),
-(6, '::1', '', '$2y$08$wD.8saaPyFHXtlDYA9712Ol7sabVkPCZ6/NWcVXq5sNNOabbw0qzK', NULL, 'ishfaq1@admin.com', NULL, NULL, NULL, NULL, 1512977238, NULL, 1, 'Ali', 'Raza', 'Faisalabad', '99999999999'),
-(7, '::1', '', '$2y$08$SRjNmGHFsx90/bGRrrd/0uOlJyY28e/mG8EAxPfkwrhgX7gwTD72i', NULL, 'user1@admin.com', NULL, NULL, NULL, NULL, 1513012412, NULL, 1, 'Malik', 'Waris', 'DSC Fsd', '888888888'),
-(8, '::1', '', '$2y$08$Pxs8vb50kua9/giD7cB9HOlNu6jqJk5sKsV1u6BJqKKk0YvYOk69q', NULL, 'bilal@admin.com', NULL, NULL, NULL, NULL, 1513012492, NULL, 1, 'Bilal', 'raza', 'Faisalabad', '888888888'),
-(9, '::1', 'sdfsadf', '$2y$08$7b0ZvKvdbZSBnIJoKRLXrepiP19ClybeS/3yf1f2kplL9rVxT5RnS', NULL, 'dsr@admin.com', NULL, NULL, NULL, NULL, 1513012567, NULL, 1, 'sdfsadf', 'sdfsdaf', 'sadfsdaf', '55555555555'),
-(10, '::1', '1111', '$2y$08$9v7Ncof6cLVqFSJS7Xor8uuAW9W/KoWpB0foMiktZZR/u3pNHOnaC', NULL, 'fasd@gmail.com', NULL, NULL, NULL, NULL, 1513013150, NULL, 1, 'Bilal', 'akhtar', 'fasd', '1111222211'),
-(11, '::1', '111', '$2y$08$5FdMq.MaltWruddzcGqPRuZxbgmXcJBHl5K5nLZZJqx1kB.FBUtZG', NULL, 'bilalbs@admin.com', NULL, NULL, NULL, NULL, 1513013456, NULL, 1, 'Malik', 'Fsd', 'DSC Fsd', '999999999'),
-(12, '::1', 'sdfsdf', '$2y$08$zozL7ZbyC/YU7D2wr7h4JOc9bixvUxaZUzhXzfb2Yizk1jXVoi4O2', NULL, 'user111@admin.com', NULL, NULL, NULL, NULL, 1513013677, NULL, 1, 'Malik', 'Waris', 'DSC Fsd', '55555555555'),
-(13, '::1', '111aaa', '$2y$08$.6Y26DLAKBSQBbF/pGUa5e5okwi2Dd7D1xVnk8HZWQlCfeDMgjk9O', NULL, 'sdfsdf555@gmail.com', NULL, NULL, NULL, NULL, 1513013897, NULL, 1, 'sadfsadf', 'sadfsadf', 'sdfsdf', '555555554'),
-(14, '::1', '', '$2y$08$5RQla3U.TO6RXT8PMhfvPuuIx1m.6s4Q0I1alje1eeHGQ1Y7GvjY2', NULL, 'faisalabad1111@admin.com', NULL, NULL, NULL, NULL, 1513017648, NULL, 1, 'Bilal', 'Waris', 'DSC Fsd', '09999998888'),
-(15, '::1', 'ds170400054', '$2y$08$Z0ldKDRogI/r33R1L/86CunwWlrjyJWEJ7JHwuNxrxmCShALnNEce', NULL, 'user@admin111.com', NULL, NULL, NULL, NULL, 1513024357, NULL, 1, 'Malik', 'Waris', 'DSC Fsd', '8887777776'),
-(16, '::1', '', '$2y$08$qa.8JKh3bnQGjX8ziUwcbuFHr7b0l7XXt9YnpI./2.j/85w0LYPem', NULL, 'bila11l@admin.com', NULL, NULL, NULL, NULL, 1513024508, NULL, 1, 'Malik', 'Waris', 'DSC Fsd', '999999999'),
-(17, '::1', '', '$2y$08$Lado4e3zhn9Pk1ue.tZoHOkcjCZvEZXc3E8rTOYB.D21qR1qmKa2a', NULL, 'dsr11@admin.com', NULL, NULL, NULL, NULL, 1513024677, NULL, 1, 'Bilal', 'Super', 'DSC Fsd', '6666555555'),
-(18, '::1', '', '$2y$08$ccrT091D57Zdt/1nfuAfRu8UVwdm1ErWU7dJECnxPl0opDvSgOopq', NULL, 'dsr111@admin.com', NULL, NULL, NULL, NULL, 1513024743, NULL, 1, 'Bilal', 'Super', 'DSC Fsd', '6666555555'),
-(19, '::1', 'ds1704000541111', '$2y$08$W6mE/PTfPGTmwtwJXrkSZOStrxhJeWdU4WkEKL4qPDJDtEf.fJI02', NULL, 'ds1111r1111@admin.com', NULL, NULL, NULL, NULL, 1513025649, NULL, 1, 'Bilal', 'Super', 'DSC Fsd', '6666555555'),
-(20, '::1', 'shahid malik1', '$2y$08$m1NELWhqgcyo9iCAYYcYfud.BV1CM3Eu8q/1FDVb428/GpyOifwvy', NULL, 'shahidmalik@admin.com', NULL, NULL, NULL, NULL, 1513025711, NULL, 1, 'Shahid', 'Malik', 'Faisalabad', '03007201629');
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `city_id`) VALUES
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'ubbKewRMYv31hKaEQcspdO', 1268889823, 1513161918, 1, 'Admin', 'istrator', 'ADMIN', '0', 0),
+(2, '::1', 'waris', '$2y$08$T/J0wxK/karJnDpatdPCs.ddOj49k35Nel9Gc73MDa69O4w9/lcNO', NULL, 'user@admin.com', NULL, NULL, NULL, 'TkFkFCz9BRUYpPf7zEoGsO', 1512553577, 1512663067, 1, 'Malik1', 'Waris1', 'DSC Fsd1', '03007201629', 0),
+(3, '::1', '', '$2y$08$ufAZIb7A2O.EgRidvi0a1OLQifH5T0JdbAdXF/X3GLd0T3OZCzxh2', NULL, 'super@admin.com', NULL, NULL, NULL, 'U9F82jQp08YIHehPODXfue', 1512570361, 1512581093, 1, 'User', 'Super', 'DSC Fsd', '03139201629', 0),
+(4, '::1', 'Faisalabad', '$2y$08$HhsSGBETyiSCbBM0Xz2ugOh5xA2akfxaH0oTa/yeaqdU1802IYshO', NULL, 'fsd@admin.com', NULL, NULL, NULL, NULL, 1512972787, 1513165080, 1, 'Faisalabad', 'User', '', '0300-7201629', 1),
+(5, '::1', 'ishfaq', '$2y$08$aFiAevMocfM9cabNMIICGugvGLnlwYmkY9G5itGQxzOJtEjN3ZE12', NULL, 'ishfaq11@admin.com', NULL, NULL, NULL, NULL, 1512976414, NULL, 1, 'Muhammad', 'Ishfaq', 'Jhang', '03007373777', 12),
+(6, '::1', '', '$2y$08$wD.8saaPyFHXtlDYA9712Ol7sabVkPCZ6/NWcVXq5sNNOabbw0qzK', NULL, 'ishfaq1@admin.com', NULL, NULL, NULL, NULL, 1512977238, NULL, 1, 'Ali', 'Raza', 'Faisalabad', '99999999999', 1),
+(7, '::1', '', '$2y$08$SRjNmGHFsx90/bGRrrd/0uOlJyY28e/mG8EAxPfkwrhgX7gwTD72i', NULL, 'user1@admin.com', NULL, NULL, NULL, NULL, 1513012412, NULL, 1, 'Malik', 'Waris', 'DSC Fsd', '888888888', 0),
+(8, '::1', '', '$2y$08$Pxs8vb50kua9/giD7cB9HOlNu6jqJk5sKsV1u6BJqKKk0YvYOk69q', NULL, 'bilal@admin.com', NULL, NULL, NULL, NULL, 1513012492, NULL, 1, 'Bilal', 'raza', 'Faisalabad', '888888888', 1),
+(9, '::1', 'sdfsadf', '$2y$08$7b0ZvKvdbZSBnIJoKRLXrepiP19ClybeS/3yf1f2kplL9rVxT5RnS', NULL, 'dsr@admin.com', NULL, NULL, NULL, NULL, 1513012567, NULL, 1, 'sdfsadf', 'sdfsdaf', 'sadfsdaf', '55555555555', 0),
+(10, '::1', '1111', '$2y$08$9v7Ncof6cLVqFSJS7Xor8uuAW9W/KoWpB0foMiktZZR/u3pNHOnaC', NULL, 'fasd@gmail.com', NULL, NULL, NULL, NULL, 1513013150, NULL, 1, 'Bilal', 'akhtar', 'fasd', '1111222211', 0),
+(11, '::1', '111', '$2y$08$5FdMq.MaltWruddzcGqPRuZxbgmXcJBHl5K5nLZZJqx1kB.FBUtZG', NULL, 'bilalbs@admin.com', NULL, NULL, NULL, NULL, 1513013456, NULL, 1, 'Malik', 'Fsd', 'DSC Fsd', '999999999', 0),
+(12, '::1', 'sdfsdf', '$2y$08$zozL7ZbyC/YU7D2wr7h4JOc9bixvUxaZUzhXzfb2Yizk1jXVoi4O2', NULL, 'user111@admin.com', NULL, NULL, NULL, NULL, 1513013677, NULL, 1, 'Malik', 'Waris', 'DSC Fsd', '55555555555', 0),
+(13, '::1', '111aaa', '$2y$08$.6Y26DLAKBSQBbF/pGUa5e5okwi2Dd7D1xVnk8HZWQlCfeDMgjk9O', NULL, 'sdfsdf555@gmail.com', NULL, NULL, NULL, NULL, 1513013897, NULL, 1, 'sadfsadf', 'sadfsadf', 'sdfsdf', '555555554', 0),
+(14, '::1', '', '$2y$08$5RQla3U.TO6RXT8PMhfvPuuIx1m.6s4Q0I1alje1eeHGQ1Y7GvjY2', NULL, 'faisalabad1111@admin.com', NULL, NULL, NULL, NULL, 1513017648, NULL, 1, 'Bilal', 'Waris', 'DSC Fsd', '09999998888', 1),
+(15, '::1', 'ds170400054', '$2y$08$Z0ldKDRogI/r33R1L/86CunwWlrjyJWEJ7JHwuNxrxmCShALnNEce', NULL, 'user@admin111.com', NULL, NULL, NULL, NULL, 1513024357, NULL, 1, 'Malik', 'Waris', 'DSC Fsd', '8887777776', 0),
+(16, '::1', '', '$2y$08$qa.8JKh3bnQGjX8ziUwcbuFHr7b0l7XXt9YnpI./2.j/85w0LYPem', NULL, 'bila11l@admin.com', NULL, NULL, NULL, NULL, 1513024508, NULL, 1, 'Malik', 'Waris', 'DSC Fsd', '999999999', 0),
+(17, '::1', '', '$2y$08$Lado4e3zhn9Pk1ue.tZoHOkcjCZvEZXc3E8rTOYB.D21qR1qmKa2a', NULL, 'dsr11@admin.com', NULL, NULL, NULL, NULL, 1513024677, NULL, 1, 'Bilal', 'Super', 'DSC Fsd', '6666555555', 0),
+(18, '::1', '', '$2y$08$ccrT091D57Zdt/1nfuAfRu8UVwdm1ErWU7dJECnxPl0opDvSgOopq', NULL, 'dsr111@admin.com', NULL, NULL, NULL, NULL, 1513024743, NULL, 1, 'Bilal', 'Super', 'DSC Fsd', '6666555555', 0),
+(19, '::1', 'ds1704000541111', '$2y$08$W6mE/PTfPGTmwtwJXrkSZOStrxhJeWdU4WkEKL4qPDJDtEf.fJI02', NULL, 'ds1111r1111@admin.com', NULL, NULL, NULL, NULL, 1513025649, NULL, 1, 'Bilal', 'Super', 'DSC Fsd', '6666-5555551', 13),
+(20, '::1', 'shahid malik1', '$2y$08$m1NELWhqgcyo9iCAYYcYfud.BV1CM3Eu8q/1FDVb428/GpyOifwvy', NULL, 'shahidmalik@admin.com', NULL, NULL, NULL, NULL, 1513025711, NULL, 1, 'Shahid', 'Malik', 'Faisalabad', '03007201629', 0),
+(21, '::1', 'shahid khan', '$2y$08$dv6z677FkVAKFIHS8Is2Ou3FdbUhNUVVmgjw5fxbTAOAwWOKuOfsa', NULL, 'shahidkhan@wix.com', NULL, NULL, NULL, NULL, 1513070287, NULL, 1, 'Mian Shahid', 'Khan', 'wix', '9999999999999', 0),
+(22, '::1', 'ghulam mustafa', '$2y$08$t6/HUFkDfdPLgpRZDin.XuhteAiRM4v7bVb2J0RlkhqsbaYIKar5C', NULL, 'ghulammustafa@admin.com', NULL, NULL, NULL, NULL, 1513070723, NULL, 1, 'Ghulam', 'Mustafa', 'Faisalabad', '9999999999', 0),
+(23, '::1', 'muhammad shahid', '$2y$08$QNbbAga07OO7wm/U1uT5eurGD5hB24bicq/ie43bDzjNJ9m5CbefS', NULL, 'shahid@admin.com', NULL, NULL, NULL, NULL, 1513098143, NULL, 1, 'Muhammad', 'Shahid', '3', '1111-1111111', 0),
+(24, '::1', 'ghulam qadir', '$2y$08$VvF0TJWri1v7xcz.FAvGdupRXG5fzKVxKnvwrVFlVoRe6w4FhjBkK', NULL, 'ghulam@gmail.com', NULL, NULL, NULL, NULL, 1513098721, NULL, 1, 'Ghulam', 'Qadir', 'Wix Zoon', '0300-8888222', 0),
+(25, '::1', 'ghulam qadir1', '$2y$08$u9dqKwTBifC8u4UuiMfUKOwW9QNlWX9EYUTJLwRUPABX7pjJIwyia', NULL, 'itbest@admin.com', NULL, NULL, NULL, NULL, 1513098876, NULL, 1, 'Ghualm', 'Qadir', 'wiz dev', '7777-7777777', 1),
+(26, '::1', 'malik asghar', '$2y$08$oW/H4WuEZzjcxuO3NsCpgedrxmVipMlpmsn7B3EHrHOcE5vNnVNFW', NULL, 'asghar@admin.com', NULL, NULL, NULL, NULL, 1513115323, NULL, 1, 'Malik', 'Asghar', 'Colleges Department', '0313-8776622', 1);
 
 -- --------------------------------------------------------
 
@@ -355,23 +362,29 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (1, 1, 1),
 (7, 2, 2),
 (5, 3, 3),
-(16, 4, 4),
-(17, 5, 4),
-(10, 6, 2),
+(52, 4, 4),
+(49, 5, 4),
+(47, 6, 2),
 (18, 7, 2),
-(19, 8, 2),
+(48, 8, 2),
 (21, 9, 2),
 (27, 10, 2),
 (26, 11, 2),
 (25, 12, 2),
 (29, 13, 2),
-(30, 14, 2),
+(50, 14, 2),
 (32, 15, 2),
 (33, 16, 2),
 (34, 17, 2),
 (35, 18, 2),
-(36, 19, 2),
-(38, 20, 2);
+(51, 19, 2),
+(38, 20, 2),
+(39, 21, 2),
+(40, 22, 2),
+(41, 23, 2),
+(42, 24, 2),
+(44, 25, 2),
+(53, 26, 2);
 
 --
 -- Indexes for dumped tables
@@ -545,13 +558,13 @@ ALTER TABLE `type_of_courts`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `users_groups`
 --
 ALTER TABLE `users_groups`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- Constraints for dumped tables

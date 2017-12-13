@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 ?>
             <header class="main-header">
-                <a href="<?php echo site_url('admin/dashboard'); ?>" class="logo">
+                <a href="<?php echo site_url('district/dashboard'); ?>" class="logo">
                     <span class="logo-mini"><b>D</b><?php echo $title_mini; ?></span>
                     <span class="logo-lg"><b>DJ </b><?php echo $title_lg; ?></span>
                 </a>
@@ -45,8 +45,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </li>
 
 <?php endif; ?>
-
-<?php // echo $header_alert_file_install; ?>
 
 <?php if ($admin_prefs['notifications_menu'] == TRUE): ?>
                             <!-- Notifications -->
@@ -102,7 +100,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="<?php echo base_url($avatar_dir . '/m_001.png'); ?>" class="user-image" alt="User Image">
-                                    <span class="hidden-xs"><?php echo $user_login['lastname']; ?></span>
+                                    <span class="hidden-xs"><?php echo $user_login['firstname']; ?></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="user-header">
@@ -124,7 +122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </li>
                                     <li class="user-footer">
                                         <div class="pull-left">
-                                            <a href="<?php echo site_url('admin/users/profile/'.$user_login['id']); ?>" class="btn btn-default btn-flat"><?php echo lang('header_profile'); ?></a>
+                                            <a href="<?php echo site_url('district/users/profile/'.$user_login['id']); ?>" class="btn btn-default btn-flat"><?php echo lang('header_profile'); ?></a>
                                         </div>
                                         <div class="pull-right">
                                             <a href="<?php echo site_url('auth/logout/admin'); ?>" class="btn btn-default btn-flat"><?php echo lang('header_sign_out'); ?></a>

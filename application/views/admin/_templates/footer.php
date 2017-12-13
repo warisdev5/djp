@@ -13,8 +13,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </footer>
         </div>
 
-        <script src="<?php echo base_url($frameworks_dir . '/jquery/jquery.min.js'); ?>"></script>
-        <script src="<?php echo base_url($frameworks_dir . '/bootstrap/js/bootstrap.min.js'); ?>"></script>
         <!-- THIS PAGE PLUGINS -->
 <?php if (isset($js_files)) : ?>
 <?php foreach ($js_files as $js) : ?>
@@ -37,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <script src="<?php echo base_url($plugins_dir . '/colorpickersliders/colorpickersliders.min.js'); ?>"></script>
 <?php endif; ?>
         <script src="<?php echo base_url($frameworks_dir . '/adminlte/js/adminlte.min.js'); ?>"></script>
-        <!-- <script src="<?php echo base_url($frameworks_dir . '/domprojects/js/dp.min.js'); ?>"></script> -->
+        <!--  <script src="<?php echo base_url($frameworks_dir . '/domprojects/js/dp.min.js'); ?>"></script> -->
 <!-- THIS PAGE PLUGINS -->
 <?php if (isset($custom_js)) : ?>
 <?php foreach ($custom_js as $js) : ?>

@@ -149,3 +149,18 @@ if (!isset($item))
 		</div>
 	</div>
 </div>
+<script>
+$(document).ready(function(){
+	
+	$('.radio-group label').on('click', function(){
+        $(this).removeClass('not-active').siblings().addClass('not-active');
+    });
+    	
+	$('.select2').select2();
+
+    $('#datepicker-1, #datepicker-2,#datepicker-3').datepicker({
+      autoclose: true,
+      format: 'yyyy-mm-dd',
+    });
+});
+</script>

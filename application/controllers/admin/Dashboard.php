@@ -12,7 +12,6 @@ class Dashboard extends Admin_Controller {
         $this->load->model('admin/dashboard_model');
     }
 
-
 	public function index()
 	{
 //         if ( ! $this->ion_auth->logged_in() )

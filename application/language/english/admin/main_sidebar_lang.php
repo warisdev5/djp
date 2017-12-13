@@ -23,6 +23,7 @@ $lang['menu_search'] = 'Search';
 
 /* ****** */$lang['menu_users']                 = 'Users';
 /* ****** */$lang['menu_users_list']            = 'Users list';
+
 /* ****** */$lang['menu_users_districts']       = 'Districts admin users';
 /* *********** */$lang['menu_users_profile']    = 'Profile';
 /* *********** */$lang['menu_users_deactivate'] = 'Deactivate';

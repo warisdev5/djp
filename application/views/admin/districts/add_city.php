@@ -85,3 +85,14 @@ if (!isset($item))
 		</div>
 	</div>
 </div>			
+
+<script>
+$(document).ready(function(){
+	
+	$('.radio-group label').on('click', function(){
+        $(this).removeClass('not-active').siblings().addClass('not-active');
+    });
+    	
+	$('.select2').select2();
+});
+</script>
