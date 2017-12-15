@@ -194,7 +194,7 @@ class Users extends Admin_Controller {
 			);
 			
 			/* Dropdown list */
-			$this->data['cities'] = $this->districts_model->getCityForParentId($id=0);
+			$this->data['cities'] = $this->districts_model->getCityForParentId($id=null);
 			
 			// load js files in array
 			$this->data['custom_js'] = array('/input-mask/jquery.inputmask.js','/bootstrap-select/dist/js/bootstrap-select.min.js');
@@ -402,7 +402,7 @@ class Users extends Admin_Controller {
 		);
 		
 		/* Dropdown list */
-		$this->data['cities'] = $this->districts_model->getCityForParentId($id=0);
+		$this->data['cities'] = $this->districts_model->getCityForParentId($id=null);
 			
 		// load js files in array
 		$this->data['custom_js'] = array('/input-mask/jquery.inputmask.js','/bootstrap-select/dist/js/bootstrap-select.min.js');
@@ -429,11 +429,13 @@ class Users extends Admin_Controller {
 		if ($activation)
 		{
             $this->session->set_flashdata('message', $this->ion_auth->messages());
+            $this->session->set_flashdata('message_type','info');
 			redirect('admin/users', 'refresh');
 		}
 		else
 		{
 			$this->session->set_flashdata('message', $this->ion_auth->errors());
+			$this->session->set_flashdata('message_type','warning');
 			redirect('auth/forgot_password', 'refresh');
 		}
 	}
@@ -482,8 +484,12 @@ class Users extends Admin_Controller {
 					$this->ion_auth->deactivate($id);
 				}
 			}
-
+			
+			$this->session->set_flashdata('message', $this->ion_auth->messages());
+			$this->session->set_flashdata('message_type','warning');
+			
 			redirect('admin/users', 'refresh');
+			
 		}
 	}
 

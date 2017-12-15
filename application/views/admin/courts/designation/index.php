@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     	<tr>
                         	<th>Sr.No</th>
                             <th>Designation</th>
-                            <th>Designation<br>short name</th>
+                            <th>short name</th>
                             <th>Active</th>
                             <th class="hidden-print">Action</th>
 						</tr>
@@ -25,14 +25,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 		
 					<tbody>
 						<?php $i = 1?>
-						<?php foreach ($designations as $desgn) : ?>
+						<?php foreach ($designations as $item) : ?>
 							
 							<tr>
 								<td><?php echo $i++?></td>
-								<td><?php echo $desgn->desgn_name; ?></td>
-								<td><?php echo $desgn->desgn_short_name; ?></td>
-								<td><span class="label <?= (($desgn->active=='Yes') ? 'bg-primary' : 'bg-gray'); ?>"><?php echo $desgn->active;?></span></td>
-								<td class="hidden-print"><?php echo anchor('admin/courts/edit_designation/'.$desgn->desgn_id, '<i class="fa fa-edit"></i>','class="btn btn-primary btn-sm m-r-5"'); ?></td>
+								<td><?php echo $item->desgn_name; ?></td>
+								<td><?php echo $item->desgn_short_name; ?></td>
+								<td><span class="label <?= (($item->active=='Yes') ? 'bg-blue' : 'bg-yellow'); ?>"><?php echo $item->active;?></span></td>
+								<td class="hidden-print"><?php echo anchor('admin/courts/edit_designation/'.$item->id, '<i class="fa fa-edit"></i>','class="btn btn-primary btn-sm m-r-5"'); ?></td>
 							</tr>
 							
 						<?php endforeach; ?>

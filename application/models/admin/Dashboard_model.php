@@ -8,7 +8,6 @@ class Dashboard_model extends CI_Model {
         parent::__construct();
     }
 
-
     public function get_count_record($table)
     {
         $query = $this->db->count_all($table);
@@ -16,24 +15,20 @@ class Dashboard_model extends CI_Model {
         return $query;
     }
 
-
     public function disk_totalspace($dir = DIRECTORY_SEPARATOR)
     {
         return disk_total_space($dir);
     }
-
 
     public function disk_freespace($dir = DIRECTORY_SEPARATOR)
     {
         return disk_free_space($dir);
     }
 
-
     public function disk_usespace($dir = DIRECTORY_SEPARATOR)
     {
         return $this->disk_totalspace($dir) - $this->disk_freespace($dir);
     }
-
 
     public function disk_freepercent($dir = DIRECTORY_SEPARATOR, $display_unit = FALSE)
     {
@@ -49,7 +44,6 @@ class Dashboard_model extends CI_Model {
         return round(($this->disk_freespace($dir) * 100) / $this->disk_totalspace($dir), 0).$unit;
     }
 
-
     public function disk_usepercent($dir = DIRECTORY_SEPARATOR, $display_unit = FALSE)
     {
         if ($display_unit === FALSE)
@@ -64,12 +58,10 @@ class Dashboard_model extends CI_Model {
         return round(($this->disk_usespace($dir) * 100) / $this->disk_totalspace($dir), 0).$unit;
     }
 
-
     public function memory_usage()
     {
         return memory_get_usage();
     }
-
 
     public function memory_peak_usage($real = TRUE)
     {
@@ -82,7 +74,6 @@ class Dashboard_model extends CI_Model {
             return memory_get_peak_usage(FALSE);
         }
     }
-
 
     public function memory_usepercent($real = TRUE, $display_unit = FALSE)
     {

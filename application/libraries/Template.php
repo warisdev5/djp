@@ -65,4 +65,20 @@ class Template {
         }
 	}
 	
+	public function frontend_render($content, $data = NULL )
+	{
+		if ( ! $content)
+		{
+			return NULL;
+		}
+		else
+		{
+			$this->template['header']  = $this->CI->load->view('public/_templates/header', $data, TRUE);
+			$this->template['content'] = $this->CI->load->view($content, $data, TRUE);
+			$this->template['footer']  = $this->CI->load->view('public/_templates/footer', $data, TRUE);
+		
+			return $this->CI->load->view('public/_templates/template', $this->template);
+		}
+	}
+	
 }

@@ -47,9 +47,10 @@ class Users extends District_Controller {
 				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
 			}
 			
-// 			echo '<pre>';
-// 			var_dump($this->data['users']);
-// 			die();
+			// load js files in array
+			$this->data['js_files'] = array('/datatables.net/js/jquery.dataTables.min.js', '/datatables.net-bs/js/dataTables.bootstrap.min.js');
+			// load css files
+			$this->data['css_files'] = array('/datatables.net-bs/css/dataTables.bootstrap.min.css');
 	
 			/* Load Template */
 			$this->template->district_render('district/users/index', $this->data);
@@ -381,24 +382,35 @@ class Users extends District_Controller {
 	function activate($id, $code = FALSE)
 	{
 		$id = (int) $id;
+		
+		$loginUserId   = $this->ion_auth->user()->row()->id;
+		$userCity      = $this->ion_auth->user($id)->row()->city_id;
+		$currentGroups = $this->ion_auth->get_users_groups($loginUserId)->row()->name;
+		
+// 		echo $loginUserId.'<br>';
+// 		echo $userCity.'<br>';
+// 		echo $currentGroups.'<br>';
+// 		die();
 	
 		if ($code !== FALSE)
 		{
 			$activation = $this->ion_auth->activate($id, $code);
 		}
-		else if ($this->ion_auth->is_admin())
-		{
+		else if ( $this->ion_auth->in_group($currentGroups) == 'district' && ($this->ion_auth->user()->row()->city_id == $userCity) )
+		{					
 			$activation = $this->ion_auth->activate($id);
 		}
 	
 		if ($activation)
 		{
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect('admin/users', 'refresh');
+			$this->session->set_flashdata('message_type','info');
+			redirect('district/users', 'refresh');
 		}
 		else
 		{
 			$this->session->set_flashdata('message', $this->ion_auth->errors());
+			$this->session->set_flashdata('message_type','warning');
 			redirect('auth/forgot_password', 'refresh');
 		}
 	}
@@ -413,18 +425,14 @@ class Users extends District_Controller {
 // 		$groups        = $this->ion_auth->groups()->result_array();
 		$currentGroups = $this->ion_auth->get_users_groups($loginUserId)->row()->name;
 		
-// 				echo '<pre>';
-// 				var_dump($currentGroups);
-// 				die();
-		
 		if ( ! $this->ion_auth->logged_in() OR ( ! $this->ion_auth->in_group($currentGroups) == 'district' && ! ($this->ion_auth->user()->row()->city_id == $userCity)) )
 		{
 			$this->session->set_flashdata('message', 'You must be an administrator to view this page.');
 			$this->session->set_flashdata('message_type','warning');
 			
-			redirect('district/dashboard', 'refresh');
+			redirect('district/users', 'refresh');
 		}
-	
+
 		/* Breadcrumbs */
 		$this->breadcrumbs->unshift(2, lang('menu_users_deactivate'), 'district/users/deactivate');
 		$this->data['breadcrumb'] = $this->breadcrumbs->show();
@@ -445,7 +453,7 @@ class Users extends District_Controller {
 			$this->data['lastname']   = ! empty($user->last_name) ? ' '.htmlspecialchars($user->last_name, ENT_QUOTES, 'UTF-8') : NULL;
 	
 			/* Load Template */
-			$this->template->district_render('admin/users/deactivate', $this->data);
+			$this->template->district_render('district/users/deactivate', $this->data);
 		}
 		else
 		{
@@ -461,6 +469,9 @@ class Users extends District_Controller {
 					$this->ion_auth->deactivate($id);
 				}
 			}
+			
+			$this->session->set_flashdata('message', $this->ion_auth->messages());
+			$this->session->set_flashdata('message_type','warning');
 	
 			redirect('district/users', 'refresh');
 		}

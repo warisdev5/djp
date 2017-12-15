@@ -32,7 +32,7 @@
                             	<?php // echo anchor('admin/groups/edit/'.$group->id, '<span class="label" style="background:'.$group->bgcolor.';">'.htmlspecialchars($group->name, ENT_QUOTES, 'UTF-8').'</span>'); ?>
 								<?php endforeach?>
                             </td>
-                            <td><?php echo ($user->active) ? anchor('district/users/deactivate/'.$user->id, '<span class="label label-success">'.lang('users_active').'</span>') : anchor('admin/users/activate/'. $user->id, '<span class="label label-default">'.lang('users_inactive').'</span>'); ?></td>
+                            <td><?php echo ($user->active) ? anchor('district/users/deactivate/'.$user->id, '<span class="label label-success">'.lang('users_active').'</span>') : anchor('district/users/activate/'. $user->id, '<span class="label label-danger">'.lang('users_inactive').'</span>'); ?></td>
                             <td>
                             	<?php echo anchor('district/users/edit/'.$user->id, '<i class="fa fa-edit"></i>','class="btn btn-primary btn-sm m-r-5"'); ?>
                             	<?php echo anchor('district/users/profile/'.$user->id, '<i class="fa fa-eye"></i>','class="btn btn-info btn-sm"'); ?>

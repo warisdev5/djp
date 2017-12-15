@@ -8,25 +8,118 @@ class Courts_model extends CI_Model {
         parent::__construct();
     }
     
+    public function check_unique_court_name($id)
+    {
+    	$this->db->select('judge_id, city_id');
+    	$this->db->where('id !=', $id);
+    	$this->db->from('courts');
+    	$query = $this->db->get();
+    	$result = $query->result();
+    
+    	$names =  array();
+    	foreach ($result as $r){
+    		$names[$r->judge_id] = $r;
+    	}
+    	return $names;
+    }
+    
+    public function getCourtForEdit($id)
+    {
+    	$this->db->select('*');
+    	$this->db->from('courts');
+    	$this->db->where('id', $id);
+    	$query = $this->db->get();
+    	$result = $query->row();
+    	return $result;
+    }
+    
+    public function save_court($data)
+    {
+    	//set value by name
+    	$this->db->set('judge_id', $data['judge_id']);
+    	$this->db->set('court_type_id', $data['court_type_id']);
+    	$this->db->set('user_id', (!empty($data['user_id']) ? $data['user_id'] : NULL ));
+    	
+    	if (empty($data['teh_id']))
+    	{
+    		$this->db->set('city_id', (!empty($data['city_id']) ? $data['city_id'] : NULL));
+    	}
+    	else 
+    	{
+    		$this->db->set('city_id', (!empty($data['teh_id']) ? $data['teh_id'] : NULL));
+    	}
+    	
+//     	$this->db->set('case_type_id', (!empty($data['case_type_id']) ? $data['case_type_id'] : NULL ) );
+    	$this->db->set('sorting', $data['sorting']);
+    
+    	if ($data['id'] == 0 )
+    	{
+    		$this->db->set('court_number', $data['court_number']);
+    		
+    		$status = $this->db->insert('courts');
+    	}
+    	else
+    	{
+    		$this->db->where('id',$data['id']);
+    		$status = $this->db->update('courts');
+    	}
+    
+    	$status = $this->db->affected_rows();
+    	return $status;
+    }
+    
+    function getCourts()
+    {
+    	$this->db->select('courts.*,j.judge_name, courts_type.court_type, d.desgn_name as designation, city.city_name as city, CONCAT(first_name," ",last_name, "<br>(",email,")") as user');
+    	$this->db->from('courts');
+    	$this->db->join('judges as j', 'j.id = courts.judge_id', 'left');
+    	$this->db->join('courts_type', 'courts_type.id = courts.court_type_id', 'left');
+    	$this->db->join('designation as d', 'd.id = j.desgn_id', 'left');
+    	$this->db->join('districts as city', 'city.id = courts.city_id', 'left');
+    	$this->db->join('users', 'users.id = courts.user_id', 'left');
+    	$this->db->order_by('d.id asc, j.seniority asc');
+    	$query = $this->db->get();
+    	$result = $query->result();
+    	return $result;
+    }
+    
+    // check cnic validation of judge
+    public function check_unique_cnic_number($id)
+    {
+    	$this->db->select('cnic');
+    	$this->db->from('judges');
+    	$this->db->where('id !=', $id);
+    	$query = $this->db->get();
+    	$result = $query->result();
+    
+    	$cnic =  array();
+    	foreach ($result as $r){
+    		$cnic[$r->cnic] = $r;
+    	}
+    	return $cnic;
+    }
+    
     public function save_judge($data)
     {
     	//set value by name
     	$this->db->set('judge_name', $data['judge_name']);
     	$this->db->set('desgn_id', $data['desgn_id']);
+    	$this->db->set('cnic', $data['cnic']);
     	$this->db->set('date_of_birth', $data['date_of_birth']);
     	$this->db->set('date_of_joining', $data['date_of_joining']);
     	$this->db->set('date_of_retirement', $data['date_of_retirement']);
-    	$this->db->set('domicile_id', $data['domicile_id']);
+    	$this->db->set('city_id', $data['city_id']);
     	$this->db->set('gender', $data['gender']);
     	$this->db->set('seniority', $data['seniority']);
+    	$this->db->set('active', $data['active']);
     
-    	if ($data['judge_id'] == 0 )
+    	if ($data['id'] == 0 )
     	{
     		$status = $this->db->insert('judges');
     	}
     	else
     	{
-    		$this->db->where('judge_id',$data['judge_id']);
+    		$this->db->where('id',$data['id']);
     		$status = $this->db->update('judges');
     	}
     
@@ -38,7 +131,7 @@ class Courts_model extends CI_Model {
     {
     	$this->db->select('*');
     	$this->db->from('judges');
-    	$this->db->where('judge_id', $id);
+    	$this->db->where('id', $id);
     	$query = $this->db->get();
     	$result = $query->row();
     	return $result;
@@ -46,10 +139,10 @@ class Courts_model extends CI_Model {
     
     function getJudges()
     {
-    	$this->db->select('a.judge_id, a.judge_name, a.date_of_birth, a.date_of_joining, a.date_of_retirement, a.gender, a.seniority, d.desgn_name as designation, c.city_name as domicile');
+    	$this->db->select('a.id, a.judge_name, a.date_of_birth, a.date_of_joining, a.date_of_retirement, a.gender, a.seniority, a.active, d.desgn_name as designation, c.city_name as domicile');
     	$this->db->from('judges as a');
-    	$this->db->join('designation as d', 'd.desgn_id = a.desgn_id', 'left');
-    	$this->db->join('districts as c', 'c.id = a.domicile_id', 'left');
+    	$this->db->join('designation as d', 'd.id = a.desgn_id', 'left');
+    	$this->db->join('districts as c', 'c.id = a.city_id', 'left');
     	$this->db->order_by('a.desgn_id asc, a.seniority asc');
     	$query = $this->db->get();
     	$result = $query->result();
@@ -59,7 +152,7 @@ class Courts_model extends CI_Model {
 	public function check_unique_designation($id)
 	{
 		$this->db->select('desgn_name');
-		$this->db->where('desgn_id !=', $id);
+		$this->db->where('id !=', $id);
 		$this->db->from('designation');
 		$query = $this->db->get();
 		$result = $query->result();
@@ -79,13 +172,13 @@ class Courts_model extends CI_Model {
 		$this->db->set('active', $data['active']);
 		$this->db->set('sorting', $data['sorting']);
 		
-		if ($data['desgn_id'] == 0 )
+		if ($data['id'] == 0 )
 		{
 			$status = $this->db->insert('designation');
 		}
 		else
 		{
-			$this->db->where('desgn_id',$data['desgn_id']);
+			$this->db->where('id',$data['id']);
 			$status = $this->db->update('designation');
 		}
 		
@@ -97,7 +190,7 @@ class Courts_model extends CI_Model {
 	{
 		$this->db->select('*');
 		$this->db->from('designation');
-		$this->db->where('desgn_id', $id);
+		$this->db->where('id', $id);
 		$query = $this->db->get();
 		$result = $query->row();
 		return $result;

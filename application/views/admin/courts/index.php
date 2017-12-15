@@ -4,45 +4,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-12">
 		<div class="box">
 			<div class="box-header with-border">
             	<h3 class="box-title"><?php echo $sub_title?></h3>
-            	<?php echo anchor('admin/category/add', '<span class="btn-label"><i class="fa fa-plus"></i></span> '. lang('menu_category_add'), array('class' => 'btn btn-primary btn-labeled btn-flat hidden-print pull-right')); ?>
+            	<?php echo anchor('admin/courts/add_court', '<span class="btn-label"><i class="fa fa-plus"></i></span> '. lang('menu_court_add'), array('class' => 'btn btn-primary btn-labeled btn-flat hidden-print pull-right')); ?>
 			</div>
 			<div class="box-body">
                 
-				<table id="category-table" class="table table-striped table-hover table-condensed">
+				<table id="recordTable" class="table table-striped table-hover table-condensed">
                 	<thead>
                     	<tr>
                         	<th>Sr.No</th>
-                            <th>Category</th>
-                            <th>Sub Category</th>
+                        	<th>Court #</th>
+                            <th>Court Name</th>
+                            <th>Designation</th>
                             <th>Type</th>
+                            <th>City</th>
+                            <th>User</th>
+                            <th>Sorting #</th>
                             <th class="hidden-print">Action</th>
 						</tr>
 					</thead>
                                 		
 					<tbody>
 						<?php $i = 1?>
-						<?php foreach ($categories as $cat) : ?>
+						<?php foreach ($courts as $item) : ?>
 							
 							<tr>
 								<td><?php echo $i++?></td>
-								<td><?php echo $cat->cat_name; ?></td>
-								<td></td>
-								<td><?php echo $cat->cat_type; ?></td>
-								<td class="hidden-print"><?php echo anchor('admin/category/edit/'.$cat->id, '<i class="fa fa-edit"></i>','class="btn btn-primary btn-sm m-r-5"'); ?></td>
+								<td><?php echo $item->court_number; ?></td>
+								<td><?php echo $item->judge_name; ?></td>
+								<td><?php echo $item->designation?></td>
+								<td><?php echo $item->court_type; ?></td>
+								<td><?php echo $item->city; ?></td>
+								<td><?php echo $item->user; ?></td>
+								<td><?php echo $item->sorting; ?></td>
+								<td class="hidden-print"><?php echo anchor('admin/courts/edit_court/'.$item->id, '<i class="fa fa-edit"></i>','class="btn btn-primary btn-sm m-r-5"'); ?></td>
 							</tr>
-							<?php foreach ($cat->sub_categories as $sub_cat) : ?>
-							<tr>
-								<td></td>
-								<td><i class="fa fa-angle-double-right pull-right"></i></td>
-								<td><?php echo $sub_cat->cat_name; ?></td>
-								<td><?php echo $sub_cat->cat_type; ?></td>
-								<td class="hidden-print"><?php echo anchor('admin/category/edit/'.$sub_cat->id, '<i class="fa fa-edit"></i>','class="btn btn-primary btn-sm m-r-5"'); ?></td>
-							</tr>
-							<?php endforeach;?>
 							
 						<?php endforeach; ?>
 					</tbody>
@@ -55,7 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     
 <script>
 	$(document).ready(function(){
-	    $('#category-table').DataTable({
+	    $('#recordTable').DataTable({
 	      'paging'      : true,
 	      'lengthChange': false,
 	      'searching'   : false,

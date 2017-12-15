@@ -44,8 +44,8 @@ $lang['menu_search'] = 'Search';
 
 /* ****** */$lang['menu_courts']      			= 'Courts';
 /* *********** */$lang['menu_courts_list']      = 'Courts List';
-/* *********** */$lang['menu_courts_add']      	= 'Add court';
-/* *********** */$lang['menu_courts_edit']      = 'Edit court';
+/* *********** */$lang['menu_court_add']      	= 'Add court';
+/* *********** */$lang['menu_court_edit']       = 'Edit court';
 /* *********** */$lang['menu_desgn']      		= 'Designation List';
 /* *********** */$lang['menu_desgn_add']      	= 'Add designation';
 /* *********** */$lang['menu_desgn_edit']      	= 'Edit designation';

@@ -9,8 +9,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <h3 class="box-title"><?php echo sprintf(lang('users_deactivate_question'), '<span class="label label-primary">'.$firstname.$lastname).'</span>';?></h3>
                                 </div>
                                 <div class="box-body">
-                                    <?php echo form_open('admin/users/deactivate/'. $id, array('class' => 'form-horizontal', 'id' => 'form-status_user')); ?>
-                                        
+                                    <?php echo form_open('district/users/deactivate/'. $id, array('class' => 'form-horizontal', 'id' => 'form-status_user')); ?>
+
                                         <div class="form-group m-t-20">
 											<label class="col-sm-4 control-label" for="active">Are you sure? </label>
 											<div class="col-sm-8">
@@ -22,14 +22,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												</div>
 											</div>
 										</div>
-										
+                                        
                                         <div class="form-group">
                                             <div class="col-sm-offset-4 col-sm-8 m-t-20">
                                                 <?php echo form_hidden($csrf); ?>
                                                 <?php echo form_hidden(array('id'=>$id)); ?>
                                                 <div class="btn-group">
                                                     <?php echo form_button(array('type' => 'submit', 'class' => 'btn btn-primary btn-flat', 'content' => lang('actions_submit'))); ?>
-                                                    <?php echo anchor('admin/users', lang('actions_cancel'), array('class' => 'btn btn-default btn-flat')); ?>
+                                                    <?php echo anchor('district/users', lang('actions_cancel'), array('class' => 'btn btn-default btn-flat')); ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -38,7 +38,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                          </div>
                     </div>
-                    
 <script>
 $(document).ready(function(){
 	$('.radio-group label').on('click', function(){

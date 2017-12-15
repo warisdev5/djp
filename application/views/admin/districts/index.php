@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-8">
 		<div class="box">
 			<div class="box-header with-border">
             	<h3 class="box-title"><?php echo $sub_title; ?></h3>
@@ -18,6 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         	<th>Sr.No</th>
                             <th>District</th>
                             <th>Sub Division</th>
+                            <th>Active</th>                            
                             <th class="hidden-print">Action</th>
 						</tr>
 					</thead>
@@ -30,6 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<td><?php echo $i++?></td>
 								<td><?php echo $city->city_name;?></td>
 								<td></td>
+								<td><span class="label <?= (($city->active=='Yes') ? 'bg-blue' : 'bg-yellow'); ?>"><?php echo $city->active;?></span></td>
 								<td class="hidden-print"><?php echo anchor('admin/districts/edit/'.$city->id, '<i class="fa fa-edit"></i>','class="btn btn-primary btn-sm m-r-5"'); ?></td>
 							</tr>
 							<?php foreach ($city->tehsils as $teh) : ?>
@@ -37,6 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<td></td>
 								<td><i class="fa fa-angle-double-right pull-right"></i></td>
 								<td><?php echo $teh->city_name; ?></td>
+								<td><span class="label <?= (($teh->active=='Yes') ? 'bg-blue' : 'bg-yellow'); ?>"><?php echo $teh->active;?></span></td>
 								<td class="hidden-print"><?php echo anchor('admin/districts/edit/'.$teh->id, '<i class="fa fa-edit"></i>','class="btn btn-primary btn-sm m-r-5"'); ?></td>
 							</tr>
 							<?php endforeach;?>
@@ -56,7 +59,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	      'paging'      : true,
 	      'lengthChange': true,
 	      'searching'   : true,
-	      'ordering'    : true,
+	      'ordering'    : false,
 	      'info'        : true,
 	      'autoWidth'   : false
 	    });

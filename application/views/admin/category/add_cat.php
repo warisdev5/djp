@@ -5,6 +5,7 @@ if (!isset($item))
 	$item = new stdClass();
 	$item->id=0;
 	$item->cat_name='';
+	$item->court_type_id=1;
 	$item->case_type_id=1;
 	$item->cat_id='';
 	$item->active='Yes';
@@ -38,7 +39,20 @@ if (!isset($item))
 				</div>
 				
 				<div class="form-group">
-					<label class="col-sm-4 control-label" for="cat_type">Type *</label>
+					<label class="col-sm-4 control-label" for="cat_type">Court Type *</label>
+					<div class="col-sm-8">
+						<div class="input-group">
+							<div class="btn-group radio-group">
+								<label class="btn btn-success <?php if($item->court_type_id != 1){ echo 'not-active'; } ?>">Sessions<input type="radio" name="court_type_id" class="hidden" value="1" <?php if($item->court_type_id==1){echo 'checked';}?> ></label>
+	                			<label class="btn btn-info <?php if($item->court_type_id != 2){ echo 'not-active'; } ?>"> Civil <input type="radio" name="court_type_id" class="hidden" value="2" <?php if($item->court_type_id==2){echo 'checked';}?> ></label>
+							</div>
+						</div>
+						<?php echo form_error('case_type_id', '<div class="error">', '</div>'); ?>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="cat_type">Case Type *</label>
 					<div class="col-sm-8">
 						<div class="input-group">
 							<div class="btn-group radio-group">

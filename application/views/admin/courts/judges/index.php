@@ -24,6 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <th>Date of Retirement</th>
                             <th>Gender</th>
                             <th>Seniority #</th>
+                            <th>Active</th>
                             <th class="hidden-print">Action</th>
 						</tr>
 					</thead>
@@ -42,7 +43,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<td><?php echo $item->date_of_retirement; ?></td>
 								<td><?php echo $item->gender; ?></td>
 								<td><?php echo $item->seniority; ?></td>
-								<td class="hidden-print"><?php echo anchor('admin/courts/edit_judge/'.$item->judge_id, '<i class="fa fa-edit"></i>','class="btn btn-primary btn-sm m-r-5"'); ?></td>
+								<td><span class="label <?= (($item->active=='Yes') ? 'bg-blue' : 'bg-yellow'); ?>"><?php echo $item->active;?></span></td>
+								<td class="hidden-print"><?php echo anchor('admin/courts/edit_judge/'.$item->id, '<i class="fa fa-edit"></i>','class="btn btn-primary btn-sm m-r-5"'); ?></td>
 							</tr>
 							
 						<?php endforeach; ?>

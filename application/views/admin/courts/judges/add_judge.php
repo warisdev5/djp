@@ -3,15 +3,17 @@
 if (!isset($item))
 {
 	$item = new stdClass();
-	$item->judge_id=0;
+	$item->id=0;
 	$item->judge_name='';
 	$item->desgn_id='';
+	$item->cnic='';
 	$item->date_of_birth='';
 	$item->date_of_joining='';
 	$item->date_of_retirement='';
-	$item->domicile_id='';
+	$item->city_id='';
 	$item->gender='Male';
 	$item->seniority='';
+	$item->active='Yes';
 }
 ?>
 
@@ -40,7 +42,6 @@ if (!isset($item))
 					</div>
 				</div>
 				
-				
 				<div class="form-group">
 					<label class="col-sm-4 control-label">Designation</label>
 					<div class="col-sm-6">
@@ -48,13 +49,24 @@ if (!isset($item))
 							$options = array();
 							$options[''] = 'Please select...';
 							foreach ($designations as $desgn) {
-								$options[$desgn->desgn_id] = $desgn->desgn_name;
+								$options[$desgn->id] = $desgn->desgn_name;
 							}
 							echo form_dropdown('desgn_id', $options, 
 								isset($item->desgn_id)? $item->desgn_id: set_value('desgn_id'),
 								array('class' => 'form-control select2 col-sm-4'));
 						?>
 						<?php echo form_error('desgn_id', '<div class="error">', '</div>'); ?>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-4 control-label">CNIC #</label>
+                    <div class="col-sm-6">
+						<div class="input-group">
+                         	<div class="input-group-addon"><i class="fa fa-barcode"></i></div>
+                            <input type="text" name="cnic" class="form-control" value="<?php echo set_value('cnic', $item->cnic); ?>" data-inputmask="'mask':'99999-9999999-9'" data-mask>
+						</div>
+						<?php echo form_error('cnic', '<div class="error">', '</div>'); ?>
 					</div>
 				</div>
 				
@@ -103,11 +115,11 @@ if (!isset($item))
 							foreach ($cities as $city) {
 								$options[$city->id] = $city->city_name;
 							}
-							echo form_dropdown('domicile_id', $options, 
-								isset($item->domicile_id)? $item->domicile_id: set_value('domicile_id'),
+							echo form_dropdown('city_id', $options, 
+								isset($item->city_id)? $item->city_id: set_value('city_id'),
 								array('class' => 'form-control select2 col-sm-4'));
 						?>
-						<?php echo form_error('domicile_id', '<div class="error">', '</div>'); ?>
+						<?php echo form_error('city_id', '<div class="error">', '</div>'); ?>
 					</div>
 				</div>
 
@@ -120,6 +132,7 @@ if (!isset($item))
 	                			<label class="btn btn-primary <?php if($item->gender != 'Female'){ echo 'not-active'; } ?>"> Female <input type="radio" name="gender" class="hidden" value="Female" <?php if($item->gender=='Female'){echo 'checked';}?>></label>
 							</div>
 						</div>
+						<?php echo form_error('gender', '<div class="error">', '</div>'); ?>
 					</div>
 				</div>
 				
@@ -131,7 +144,20 @@ if (!isset($item))
 					</div>
 				</div>
 				
-		        <input type="hidden" name="judge_id" value="<?php echo set_value('judge_id',$item->judge_id); ?>">
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="active">Active</label>
+					<div class="col-sm-8">
+						<div class="input-group">
+							<div class="btn-group radio-group">
+								<label class="btn btn-success <?php if($item->active != 'Yes'){ echo 'not-active'; } ?>"> Yes <input type="radio" name="active" class="hidden" value="Yes" <?php if($item->active=='Yes'){echo 'checked';}?>></label>
+	                			<label class="btn btn-danger <?php if($item->active != 'No'){ echo 'not-active'; } ?>"> No <input type="radio" name="active" class="hidden" value="No" <?php if($item->active=='No'){echo 'checked';}?>></label>
+							</div>
+						</div>
+						<?php echo form_error('active', '<div class="error">', '</div>'); ?>
+					</div>
+				</div>
+				
+		        <input type="hidden" name="id" value="<?php echo set_value('id',$item->id); ?>">
 		        
 			</div>
 		
@@ -157,6 +183,8 @@ $(document).ready(function(){
     });
     	
 	$('.select2').select2();
+
+	$('[data-mask]').inputmask();
 
     $('#datepicker-1, #datepicker-2,#datepicker-3').datepicker({
       autoclose: true,

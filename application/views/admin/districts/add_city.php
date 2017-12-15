@@ -5,7 +5,7 @@ if (!isset($item))
 	$item = new stdClass();
 	$item->id=0;
 	$item->city_name='';
-	$item->city_id='';
+	$item->teh_id='';
 	$item->active='Yes';
 	$item->sorting='';
 }
@@ -39,11 +39,11 @@ if (!isset($item))
 							foreach ($cities as $city) {
 								$options[$city->id] = $city->city_name;
 							}
-							echo form_dropdown('city_id', $options, 
-								isset($item->city_id)? $item->city_id: set_value('city_id'),
+							echo form_dropdown('teh_id', $options, 
+								isset($item->teh_id)? $item->teh_id: set_value('teh_id'),
 								array('class' => 'form-control select2 col-sm-4'));
 						?>
-						<?php echo form_error('city_id', '<div class="error">', '</div>'); ?>
+						<?php echo form_error('teh_id', '<div class="error">', '</div>'); ?>
 					</div>
 				</div>
 

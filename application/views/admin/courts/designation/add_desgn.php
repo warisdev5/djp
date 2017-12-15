@@ -3,11 +3,11 @@
 if (!isset($item))
 {
 	$item = new stdClass();
-	$item->desgn_id=0;
+	$item->id=0;
 	$item->desgn_name='';
 	$item->desgn_short_name='';
-	$item->active='Yes';
 	$item->sorting='';
+	$item->active='Yes';
 }
 ?>
 
@@ -64,7 +64,7 @@ if (!isset($item))
 					</div>
 				</div>
 				
-		        <input type="hidden" name="desgn_id" value="<?php echo set_value('desgn_id',$item->desgn_id); ?>">
+		        <input type="hidden" name="id" value="<?php echo set_value('id',$item->id); ?>">
 		        
 			</div>
 		

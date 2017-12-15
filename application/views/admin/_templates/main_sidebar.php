@@ -63,6 +63,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
                             <ul class="treeview-menu">
+                            	<li class="<?=active_link_function('add_judge')?>"><a href="<?php echo site_url('admin/courts/index'); ?>"><i class="fa fa-list"></i><?php echo lang('menu_courts_list'); ?></a></li>
                                 <li class="<?=active_link_function('add_judge')?>"><a href="<?php echo site_url('admin/courts/judges'); ?>"><i class="fa fa-list"></i><?php echo lang('menu_judge'); ?></a></li>
                                 <li class="<?=active_link_function('add_designation')?>"><a href="<?php echo site_url('admin/courts/designations'); ?>"><i class="fa fa-list"></i><?php echo lang('menu_desgn'); ?></a></li>
                             </ul>

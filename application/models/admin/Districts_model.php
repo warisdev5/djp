@@ -8,11 +8,11 @@ class Districts_model extends CI_Model {
         parent::__construct();
     }
 
-	public function get_dropdown_city_list()
+	public function get_dropdown_city_list($id)
 	{
 		$this->db->select('id, city_name');
 		$this->db->from('districts');
-		$this->db->where('city_id', 0);
+		$this->db->where('teh_id', $id);
 		$this->db->order_by('sorting asc');
 		$query = $this->db->get();
 		$result = $query->result();
@@ -21,7 +21,7 @@ class Districts_model extends CI_Model {
 	
 	public function check_unique_city($id)
 	{
-		$this->db->select('city_name');
+		$this->db->select('city_name, teh_id');
 		$this->db->where('id !=', $id);
 		$this->db->from('districts');
 		$query = $this->db->get();
@@ -34,11 +34,21 @@ class Districts_model extends CI_Model {
 		return $names;
 	}
 	
+	public function count_cityNamesByCity($city)
+	{
+		$this->db->select('city_name');
+		$this->db->from('districts');
+		$this->db->where('city_name', $city);
+		$query = $this->db->get();
+		$result = $query->num_rows();
+		return $result;
+	}
+	
 	public function save($data)
 	{
 		//set value by name
 		$this->db->set('city_name', $data['city_name']);
-		$this->db->set('city_id', $data['city_id']);
+		$this->db->set('teh_id', ( !empty($data['teh_id']) ? $data['teh_id'] : NULL ) );
 		$this->db->set('active', $data['active']);
 		$this->db->set('sorting', $data['sorting']);
 		
@@ -68,9 +78,9 @@ class Districts_model extends CI_Model {
 	
 	function getCityForParentId($id)
 	{
-		$this->db->select('id, city_name, city_id');
+		$this->db->select('id, city_name, teh_id, active');
 		$this->db->from('districts');
-		$this->db->where('city_id', $id);
+		$this->db->where('teh_id', $id);
 		$this->db->order_by('sorting asc');
 		$query = $this->db->get();
 		$result = $query->result();
