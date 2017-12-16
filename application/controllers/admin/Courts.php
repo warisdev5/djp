@@ -46,20 +46,23 @@ class Courts extends Admin_Controller {
 	
 	public function check_unique_court_name($value, $id)
 	{
+		$city_id = $this->input->post('teh_id');
+		
 		$this->form_validation->set_message('check_unique_court_name','This judge is already exist!');
 	
 		$judge = $this->courts_model->check_unique_court_name($id);
 	
-		// 		echo $value.'<br>';
-		// 		echo '<pre>';
-		// 		var_dump($cnic);
-		// 		die();
+// 				echo $value.'<br>';
+// 				echo '<pre>';
+// 				var_dump($judge);
+// 				die();
 	
 		if ( array_key_exists ($value, $judge) ) {
-	
+			
 			return false;
 	
-		} else {
+		} else { 
+			
 			return true;
 		}
 	}
@@ -84,6 +87,14 @@ class Courts extends Admin_Controller {
 		$this->data['judgesNames'] 	= $this->courts_model->getJudges();
 		$this->data['cities'] 		= $this->districts_model->getCityForParentId($id=null);
 		
+		$city = $this->courts_model->getCity();
+		
+		echo '<pre>';
+		var_dump($city);
+		die();
+		
+		
+		
 		/* Load Template */
 		$this->template->admin_render('admin/courts/add_court', $this->data);
 	}
@@ -91,6 +102,10 @@ class Courts extends Admin_Controller {
 	public function edit_court($id = null)
 	{
 		$this->data['item'] = $this->courts_model->getCourtForEdit($id);
+		
+// 		echo '<pre>';
+// 		var_dump($item);
+// 		die();
 	
 		if ( !$id OR empty($this->data['item']) )
 		{
@@ -124,9 +139,22 @@ class Courts extends Admin_Controller {
 	
 	public function save_court()
 	{
+		
+		$id = $this->input->post('id');
+		
+		if ($id == 0)
+		{
+			$courtNumber = strip_tags($this->input->post('court_number', TRUE));
+			$this->form_validation->set_rules('court_number', 'court number', 'required|is_unique[courts.court_number]');
+		}
+		else
+		{
+			$courtNumber = strip_tags($this->input->post('courtNumber', TRUE));
+		}
+		
 		$data = array(
-				'id' 			=> strip_tags(trim($this->input->post('id', TRUE))),
-				'court_number'	=> strip_tags($this->input->post('court_number', TRUE)),
+				'id' 			=> $id,
+				'court_number'	=> $courtNumber,
 				'court_type_id' => strip_tags($this->input->post('court_type_id', TRUE)),
 				'judge_id' 		=> strip_tags($this->input->post('judge_id', TRUE)),
 				'city_id'		=> strip_tags($this->input->post('city_id', TRUE)),
@@ -135,17 +163,14 @@ class Courts extends Admin_Controller {
 				'sorting'		=> strip_tags($this->input->post('sorting', TRUE))
 		);
 	
-// 						echo '<pre>';
-// 						var_dump($data);
-// 						die();
-	
-		if ($data['id'] == 0)
-		{
-			$this->form_validation->set_rules('court_number', 'court number', 'required|is_unique[courts.court_number]');
-		}
+		/* echo '<pre>';
+		var_dump($data);
+		die(); */
+		
 		$this->form_validation->set_rules('judge_id', 'judge name', 'required|callback_check_unique_court_name['.$data['id'].']');
 		$this->form_validation->set_rules('court_type_id', 'court type', 'required');
 		$this->form_validation->set_rules('city_id', 'city', 'required');
+		$this->form_validation->set_rules('teh_id', 'tehsil name', 'required');
 	
 		if ($this->form_validation->run() == FALSE)
 		{

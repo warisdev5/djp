@@ -33,6 +33,16 @@ class Courts_model extends CI_Model {
     	return $result;
     }
     
+    public function getTehsilparrentId($id)
+    {
+    	$this->db->select('id');
+    	$this->db->from('districts');
+    	$this->db->where('teh_id', $id);
+    	$query = $this->db->get();
+    	$result = $query->row();
+    	return $result;
+    }
+    
     public function save_court($data)
     {
     	//set value by name
@@ -66,6 +76,17 @@ class Courts_model extends CI_Model {
     
     	$status = $this->db->affected_rows();
     	return $status;
+    }
+    
+    public function getCity()
+    {
+    	$this->db->select('*');
+    	$this->db->from('districts');
+    	$this->db->group_by('city_name');
+    	$this->db->order_by('teh_id asc');
+    	$query = $this->db->get();
+    	$result = $query->result();
+    	return $result;
     }
     
     function getCourts()

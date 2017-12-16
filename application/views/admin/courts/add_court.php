@@ -135,6 +135,7 @@ if (!isset($item))
 				</div>
 				
 		        <input type="hidden" name="id" value="<?php echo set_value('id',$item->id); ?>">
+		        <input type="hidden" name="courtNumber" value="<?php echo $item->court_number; ?>">
 		        
 			</div>
 		
