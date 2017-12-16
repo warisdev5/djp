@@ -83,6 +83,30 @@ if (!isset($item))
 				</div>
 				
 				<div class="form-group">
+					<label class="col-sm-4 control-label">Main City</label>
+					<div class="col-sm-6">
+						
+					<select class="form-control" name="main-city">
+						<?php 
+						foreach($maincities as $result){
+							$selected='';
+							if($result->tehsil_id == $item->city_id){
+								$selected="selected='selected'";
+							}
+						?>
+							<option value="<?php echo $result->tehsil_id; ?>" <?php echo $selected; ?>><?php echo $result->tehsil_name; ?></option>
+							
+						<?php 
+						};
+						?>
+						
+					</select>
+						
+						<?php echo form_error('main-city', '<div class="error">', '</div>'); ?>
+					</div>
+				</div>
+				
+				<div class="form-group">
 					<label class="col-sm-4 control-label">City</label>
 					<div class="col-sm-6">
 						<?php 

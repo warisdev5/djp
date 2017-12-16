@@ -87,12 +87,11 @@ class Courts extends Admin_Controller {
 		$this->data['judgesNames'] 	= $this->courts_model->getJudges();
 		$this->data['cities'] 		= $this->districts_model->getCityForParentId($id=null);
 		
-		$city = $this->courts_model->getCity();
+		$this->data['maincities'] = $this->courts_model->getCity();
 		
-		echo '<pre>';
-		var_dump($city);
-		die();
-		
+//  echo '<pre>';
+//  		var_dump($city);
+// 		die();
 		
 		
 		/* Load Template */

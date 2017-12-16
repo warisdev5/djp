@@ -80,10 +80,19 @@ class Courts_model extends CI_Model {
     
     public function getCity()
     {
-    	$this->db->select('*');
+    	
+//    $var="SELECT districts.city_name as district_name, tehsil.city_name as tehsil_name FROM districts
+//    		 LEFT JOIN district tehsil
+//    		 ON district.teh_id = tehsil.id 
+//    		 ";
+    	$this->db->select('districts.id as district_id, districts.city_name as district_name, tehsil.id as tehsil_id, tehsil.city_name as tehsil_name');
     	$this->db->from('districts');
-    	$this->db->group_by('city_name');
-    	$this->db->order_by('teh_id asc');
+    	
+    	$this->db->join("districts tehsil", "tehsil.teh_id=districts.id","left");
+    	$this->db->where("districts.teh_id IS NULL");
+//     	$this->db->group_by('city_name');
+//     	$this->db->order_by('teh_id asc');
+
     	$query = $this->db->get();
     	$result = $query->result();
     	return $result;
