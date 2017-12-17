@@ -87,14 +87,26 @@ if (!isset($item))
 					<div class="col-sm-6">
 						
 					<select class="form-control" name="main-city">
+                                            <option value="">--SELECT MAIN CITY--</option>
 						<?php 
 						foreach($maincities as $result){
 							$selected='';
 							if($result->tehsil_id == $item->city_id){
 								$selected="selected='selected'";
 							}
+                                                        
+                                                        
 						?>
-							<option value="<?php echo $result->tehsil_id; ?>" <?php echo $selected; ?>><?php echo $result->tehsil_name; ?></option>
+                                            
+                                            
+							<option value="<?php echo $result->tehsil_id; ?>" <?php echo $selected; ?>>
+                                                <?php echo $result->tehsil_name; ?>
+                                                        </option>
+                                                        <optgroup label="Camping">
+                                                            <option>Tent</option>
+                                                            <option>Flashlight</option>
+                                                            <option>Toilet Paper</option>
+                                                          </optgroup>
 							
 						<?php 
 						};
