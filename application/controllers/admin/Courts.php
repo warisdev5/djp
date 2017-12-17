@@ -75,12 +75,11 @@ class Courts extends Admin_Controller {
 		$this->data['breadcrumb'] = $this->breadcrumbs->show();
 	
 		$this->data['sub_title'] = lang('menu_court_add');
-	
-		// load js files in array
-		$this->data['custom_js'] = array('/select2/js/select2.full.min.js');
-		// load css files
-		$this->data['css_files'] = array('/select2/css/select2.min.css');
-	
+	// load js files in array
+			$this->data['custom_js'] = array("/bootstra-select/bootstrap-select.min.js",'/select2/js/select2.full.min.js');
+			// load css files
+			$this->data['css_files'] = array("/bootstra-select/bootstrap-select.min.css",'/select2/css/select2.min.css');
+			
 		/* Dropdown list */
 		/* Get all users */
 		$this->data['users'] 		= $this->ion_auth->users()->result();
@@ -102,8 +101,10 @@ class Courts extends Admin_Controller {
 	{
 		$this->data['item'] = $this->courts_model->getCourtForEdit($id);
 		
+		$this->data['maincities'] = $this->courts_model->getCity();
+//		
 // 		echo '<pre>';
-// 		var_dump($item);
+// 		var_dump($this->data['item']);
 // 		die();
 	
 		if ( !$id OR empty($this->data['item']) )
@@ -121,9 +122,9 @@ class Courts extends Admin_Controller {
 			$this->data['sub_title'] = lang('menu_court_edit');
 	
 			// load js files in array
-			$this->data['custom_js'] = array('/select2/js/select2.full.min.js');
+			$this->data['custom_js'] = array("/bootstra-select/bootstrap-select.min.js",'/select2/js/select2.full.min.js');
 			// load css files
-			$this->data['css_files'] = array('/select2/css/select2.min.css');
+			$this->data['css_files'] = array("/bootstra-select/bootstrap-select.min.css",'/select2/css/select2.min.css');
 				
 			/* Dropdown list */
 			/* Get all users */
@@ -187,10 +188,10 @@ class Courts extends Admin_Controller {
 			}
 	
 			// load js files in array
-			$this->data['custom_js'] = array('/select2/js/select2.full.min.js');
+			$this->data['custom_js'] = array("/bootstra-select/bootstrap-select.min.js",'/select2/js/select2.full.min.js');
 			// load css files
-			$this->data['css_files'] = array('/select2/css/select2.min.css');
-				
+			$this->data['css_files'] = array("/bootstra-select/bootstrap-select.min.css",'/select2/css/select2.min.css');
+			
 			/* Dropdown list */
 			$this->data['judgesNames'] 	= $this->courts_model->getJudges();
 			$this->data['cities'] 	= $this->districts_model->getCityForParentId($id=null);

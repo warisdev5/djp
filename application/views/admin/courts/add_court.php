@@ -65,7 +65,9 @@ if (!isset($item))
 								isset($item->judge_id)? $item->judge_id: set_value('judge_id'),
 								array('class' => 'form-control select2 col-sm-4'));
 						?>
-						<?php echo form_error('judge_id', '<div class="error">', '</div>'); ?>
+						<?php 
+                                                echo $item->city_id;
+                                                echo form_error('judge_id', '<div class="error">', '</div>'); ?>
 					</div>
 				</div>
 				
@@ -85,10 +87,10 @@ if (!isset($item))
 				<div class="form-group">
 					<label class="col-sm-4 control-label">Main City</label>
 					<div class="col-sm-6">
-						
-					<select class="form-control" name="main-city">
-                                            <option value="">--SELECT MAIN CITY--</option>
+					<select class="selectpicker" name="main-city">
+                                            <option value="" selected="">--SELECT MAIN CITY--</option>
 						<?php 
+                                                $prev_destrict="not";
 						foreach($maincities as $result){
 							$selected='';
 							if($result->tehsil_id == $item->city_id){
@@ -99,17 +101,32 @@ if (!isset($item))
 						?>
                                             
                                             
-							<option value="<?php echo $result->tehsil_id; ?>" <?php echo $selected; ?>>
+							
+                                            
+                                            <?php
+                                            if($result->district_name!=$prev_destrict){
+                                                echo "<optgroup label='{$result->district_name}'>";
+                                                
+                                                $prev_destrict=$result->district_name;
+                                                 }
+                                          if(!empty($result->tehsil_id)){
+                                                 ?>
+                                            
+                                                        <option value="<?php echo $result->tehsil_id; ?>" <?php echo $selected; ?>>
                                                 <?php echo $result->tehsil_name; ?>
                                                         </option>
-                                                        <optgroup label="Camping">
-                                                            <option>Tent</option>
-                                                            <option>Flashlight</option>
-                                                            <option>Toilet Paper</option>
-                                                          </optgroup>
+                                                        
+                                                        <?php
+                                          }
+                                            if($result->district_name!=$prev_destrict){
+                                                echo "</optgroup>";
+                                            }
+                                            ?>
+                                                          
+                                                          
 							
 						<?php 
-						};
+						}
 						?>
 						
 					</select>
@@ -191,7 +208,7 @@ if (!isset($item))
 </div>
 <script>
 $(document).ready(function(){
-
+$(".selectpicker").selectpicker();
 	var base_url = "<?php echo base_url();?>";
 	
 	$('.radio-group label').on('click', function(){
