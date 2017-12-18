@@ -15,12 +15,13 @@ class Courts_model extends CI_Model {
     	$this->db->from('courts');
     	$query = $this->db->get();
     	$result = $query->result();
+    	return $result;
     
-    	$names =  array();
-    	foreach ($result as $r){
-    		$names[$r->judge_id] = $r;
-    	}
-    	return $names;
+//     	$names =  array();
+//     	foreach ($result as $r){
+//     		$names[$r->judge_id] = $r;
+//     	}
+//     	return $names;
     }
     
     public function getCourtForEdit($id)
@@ -49,18 +50,9 @@ class Courts_model extends CI_Model {
     	$this->db->set('judge_id', $data['judge_id']);
     	$this->db->set('court_type_id', $data['court_type_id']);
     	$this->db->set('user_id', (!empty($data['user_id']) ? $data['user_id'] : NULL ));
-    	
-    	if (empty($data['teh_id']))
-    	{
-    		$this->db->set('city_id', (!empty($data['city_id']) ? $data['city_id'] : NULL));
-    	}
-    	else 
-    	{
-    		$this->db->set('city_id', (!empty($data['teh_id']) ? $data['teh_id'] : NULL));
-    	}
-    	
-//     	$this->db->set('case_type_id', (!empty($data['case_type_id']) ? $data['case_type_id'] : NULL ) );
+    	$this->db->set('city_id', (!empty($data['city_id']) ? $data['city_id'] : NULL));
     	$this->db->set('sorting', $data['sorting']);
+    	//     	$this->db->set('case_type_id', (!empty($data['case_type_id']) ? $data['case_type_id'] : NULL ) );
     
     	if ($data['id'] == 0 )
     	{
@@ -78,13 +70,9 @@ class Courts_model extends CI_Model {
     	return $status;
     }
     
-    public function getCity()
+/*     public function getCitiesNamewithTehsils()
     {
     	
-//    $var="SELECT districts.city_name as district_name, tehsil.city_name as tehsil_name FROM districts
-//    		 LEFT JOIN district tehsil
-//    		 ON district.teh_id = tehsil.id 
-//    		 ";
     	$this->db->select('districts.id as district_id, districts.city_name as district_name, tehsil.id as tehsil_id, tehsil.city_name as tehsil_name');
     	$this->db->from('districts');
     	
@@ -96,7 +84,7 @@ class Courts_model extends CI_Model {
     	$query = $this->db->get();
     	$result = $query->result();
     	return $result;
-    }
+    } */
     
     function getCourts()
     {

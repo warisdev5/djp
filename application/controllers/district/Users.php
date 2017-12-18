@@ -166,7 +166,7 @@ class Users extends District_Controller {
 			);
 				
 			/* Dropdown list */
-			$this->data['cities'] = $this->districts_model->getCityForParentId($id=0);
+			$this->data['cities'] = $this->districts_model->getCityForParentId($id=null);
 				
 			// load js files in array
 			$this->data['custom_js'] = array('/input-mask/jquery.inputmask.js','/bootstrap-select/dist/js/bootstrap-select.min.js');
@@ -368,7 +368,7 @@ class Users extends District_Controller {
 		);
 	
 		/* Dropdown list */
-		$this->data['cities'] = $this->districts_model->getCityForParentId($id=0);
+		$this->data['cities'] = $this->districts_model->getCityForParentId($id=null);
 			
 		// load js files in array
 		$this->data['custom_js'] = array('/input-mask/jquery.inputmask.js','/bootstrap-select/dist/js/bootstrap-select.min.js');

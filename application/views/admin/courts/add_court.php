@@ -65,9 +65,7 @@ if (!isset($item))
 								isset($item->judge_id)? $item->judge_id: set_value('judge_id'),
 								array('class' => 'form-control select2 col-sm-4'));
 						?>
-						<?php 
-                                                echo $item->city_id;
-                                                echo form_error('judge_id', '<div class="error">', '</div>'); ?>
+						<?php echo form_error('judge_id', '<div class="error">', '</div>'); ?>
 					</div>
 				</div>
 				
@@ -85,80 +83,51 @@ if (!isset($item))
 				</div>
 				
 				<div class="form-group">
-					<label class="col-sm-4 control-label">Main City</label>
+					<label class="col-sm-4 control-label">City</label>
 					<div class="col-sm-6">
-					<select class="selectpicker" name="main-city">
-                                            <option value="" selected="">--SELECT MAIN CITY--</option>
-						<?php 
-                                                $prev_destrict="not";
-						foreach($maincities as $result){
-							$selected='';
-							if($result->tehsil_id == $item->city_id){
-								$selected="selected='selected'";
-							}
-                                                        
-                                                        
-						?>
-                                            
-                                            
+					<select class="form-control select2" name="city_id">
+                    	<option value="" selected="">Please select...</option>
+							<?php
 							
-                                            
-                                            <?php
-                                            if($result->district_name!=$prev_destrict){
-                                                echo "<optgroup label='{$result->district_name}'>";
+                            	$prev_city="not";
+                            	
+								foreach($cities as $city) : 
+									$selected='';
+									if($city->teh_id == $item->city_id){
+									$selected="selected='selected'";
+								}
+                                                        
+							?>
+                                             
+                            <?php
+                            	if($city->city_name!=$prev_city) {
+                                	echo "<optgroup label='{$city->city_name}'>";
                                                 
-                                                $prev_destrict=$result->district_name;
-                                                 }
-                                          if(!empty($result->tehsil_id)){
-                                                 ?>
+                                	$prev_city=$city->city_name;
+								}
+                                        if(!empty($city->teh_id))
+                                        {
+                            ?>
                                             
-                                                        <option value="<?php echo $result->tehsil_id; ?>" <?php echo $selected; ?>>
-                                                <?php echo $result->tehsil_name; ?>
-                                                        </option>
+                            			<option value="<?php echo $city->teh_id; ?>" <?php echo $selected; ?>>
+                            				<?php echo $city->tehsil_name; ?>
+                            			</option>
                                                         
-                                                        <?php
-                                          }
-                                            if($result->district_name!=$prev_destrict){
-                                                echo "</optgroup>";
-                                            }
-                                            ?>
-                                                          
-                                                          
-							
+							<?php
+                            
+                                        }
+                                            if($city->city_name!=$prev_city){
+                                            	echo "</optgroup>";
+                                        }
+							?>
+                            
 						<?php 
-						}
+							endforeach;
 						?>
 						
 					</select>
 						
 						<?php echo form_error('main-city', '<div class="error">', '</div>'); ?>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-sm-4 control-label">City</label>
-					<div class="col-sm-6">
-						<?php 
-							$options = array();
-							$options[''] = 'Please select...';
-							foreach ($cities as $city) {
-								$options[$city->id] = $city->city_name;
-							}
-							echo form_dropdown('city_id', $options, 
-								isset($item->city_id)? $item->city_id: set_value('city_id'),
-								array('class' => 'form-control select2 col-sm-4', 'id' => 'city_id' ));
-						?>
-						
-						<?php echo form_error('city_id', '<div class="error">', '</div>'); ?>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-sm-4 control-label">Tehsil</label>
-					<div class="col-sm-6">
-						<select name="teh_id" id="tehsils" class="form-control select2 col-sm-4">
-							<option value="#">Please select...</option>
-						</select>
 					</div>
 				</div>
 				
@@ -208,8 +177,6 @@ if (!isset($item))
 </div>
 <script>
 $(document).ready(function(){
-$(".selectpicker").selectpicker();
-	var base_url = "<?php echo base_url();?>";
 	
 	$('.radio-group label').on('click', function(){
         $(this).removeClass('not-active').siblings().addClass('not-active');
@@ -217,43 +184,5 @@ $(".selectpicker").selectpicker();
     	
 	$('.select2').select2();
 
-	$('#city_id').change(function() {
-
-		var city_id = $(this).val();
-
-         var city = {
-				  'city_id' : city_id
-		};
-
-		$.ajax({
-            type: "POST",
-            url: base_url+"admin/districts/getCityByParentId/",
-            data: city,
-           
-            success: function(data)
-            {
-                
-            	var cities = JSON.parse(data);
-
-            	$('#tehsils').html('');
-
-				var opt = $('<option>');
-				opt.val('');
-				opt.text('Please select...');
-				$('#tehsils').append(opt);
-                
-                $.each(cities,function(id, city)
-                {
-                    var opt = $('<option>');
-                    opt.val(city.id);
-                    opt.text(city.city_name);
-                    $('#tehsils').append(opt);
-                });
-            }
-
-        });
-
-
-	});
 });
 </script>

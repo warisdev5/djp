@@ -6,6 +6,8 @@ class Courts extends Admin_Controller {
     public function __construct()
     {
         parent::__construct();
+        
+        $this->load->library('session');
 
         $this->load->dbutil();
 
@@ -46,25 +48,29 @@ class Courts extends Admin_Controller {
 	
 	public function check_unique_court_name($value, $id)
 	{
-		$city_id = $this->input->post('teh_id');
+		echo $city_id = $this->input->post('city_id');
 		
 		$this->form_validation->set_message('check_unique_court_name','This judge is already exist!');
 	
-		$judge = $this->courts_model->check_unique_court_name($id);
-	
-// 				echo $value.'<br>';
-// 				echo '<pre>';
-// 				var_dump($judge);
-// 				die();
-	
-		if ( array_key_exists ($value, $judge) ) {
+		$judges = $this->courts_model->check_unique_court_name($id);
 			
-			return false;
-	
-		} else { 
+			foreach ($judges as $key => $val )
+			{
+				if ( $judges[$key]->judge_id == $value && $judges[$key]->city_id == $city_id )
+				{
+					$returnVal = 1;
+				} else {
+					$returnVal = 0;
+				}
+			}
 			
-			return true;
-		}
+			if ($returnVal == 1 ) 
+			{
+				return false;
+			} else {
+				return true;
+			}
+	
 	}
 	
 	public function add_court()
@@ -75,21 +81,22 @@ class Courts extends Admin_Controller {
 		$this->data['breadcrumb'] = $this->breadcrumbs->show();
 	
 		$this->data['sub_title'] = lang('menu_court_add');
-	// load js files in array
-			$this->data['custom_js'] = array("/bootstra-select/bootstrap-select.min.js",'/select2/js/select2.full.min.js');
-			// load css files
-			$this->data['css_files'] = array("/bootstra-select/bootstrap-select.min.css",'/select2/css/select2.min.css');
+		
+		// load js files in array
+		$this->data['custom_js'] = array('/select2/js/select2.full.min.js');
+		// load css files
+		$this->data['css_files'] = array('/select2/css/select2.min.css');
 			
 		/* Dropdown list */
 		/* Get all users */
 		$this->data['users'] 		= $this->ion_auth->users()->result();
 		$this->data['judgesNames'] 	= $this->courts_model->getJudges();
-		$this->data['cities'] 		= $this->districts_model->getCityForParentId($id=null);
+// 		$this->data['cities'] 		= $this->districts_model->getCityForParentId($id=null);
 		
-		$this->data['maincities'] = $this->courts_model->getCity();
+		$this->data['cities'] = $this->districts_model->getCitiesNamewithTehsils();
 		
-//  echo '<pre>';
-//  		var_dump($city);
+// 		echo '<pre>';
+//  		var_dump($this->data['cities']);
 // 		die();
 		
 		
@@ -122,15 +129,15 @@ class Courts extends Admin_Controller {
 			$this->data['sub_title'] = lang('menu_court_edit');
 	
 			// load js files in array
-			$this->data['custom_js'] = array("/bootstra-select/bootstrap-select.min.js",'/select2/js/select2.full.min.js');
+			$this->data['custom_js'] = array('/select2/js/select2.full.min.js');
 			// load css files
-			$this->data['css_files'] = array("/bootstra-select/bootstrap-select.min.css",'/select2/css/select2.min.css');
+			$this->data['css_files'] = array('/select2/css/select2.min.css');
 				
 			/* Dropdown list */
 			/* Get all users */
 			$this->data['users'] 		= $this->ion_auth->users()->result();
 			$this->data['judgesNames'] 	= $this->courts_model->getJudges();
-			$this->data['cities'] 		= $this->districts_model->getCityForParentId($id=null);
+			$this->data['cities'] = $this->districts_model->getCitiesNamewithTehsils();
 	
 			/* Load Template */
 			$this->template->admin_render('admin/courts/add_court', $this->data);
@@ -158,19 +165,17 @@ class Courts extends Admin_Controller {
 				'court_type_id' => strip_tags($this->input->post('court_type_id', TRUE)),
 				'judge_id' 		=> strip_tags($this->input->post('judge_id', TRUE)),
 				'city_id'		=> strip_tags($this->input->post('city_id', TRUE)),
-				'teh_id'		=> strip_tags($this->input->post('teh_id', TRUE)),
 				'user_id'		=> strip_tags($this->input->post('user_id', TRUE)),
 				'sorting'		=> strip_tags($this->input->post('sorting', TRUE))
 		);
 	
-		/* echo '<pre>';
-		var_dump($data);
-		die(); */
+// 		echo '<pre>';
+// 		var_dump($data);
+// 		die();
 		
 		$this->form_validation->set_rules('judge_id', 'judge name', 'required|callback_check_unique_court_name['.$data['id'].']');
 		$this->form_validation->set_rules('court_type_id', 'court type', 'required');
 		$this->form_validation->set_rules('city_id', 'city', 'required');
-		$this->form_validation->set_rules('teh_id', 'tehsil name', 'required');
 	
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -188,19 +193,19 @@ class Courts extends Admin_Controller {
 			}
 	
 			// load js files in array
-			$this->data['custom_js'] = array("/bootstra-select/bootstrap-select.min.js",'/select2/js/select2.full.min.js');
+			$this->data['custom_js'] = array('/select2/js/select2.full.min.js');
 			// load css files
-			$this->data['css_files'] = array("/bootstra-select/bootstrap-select.min.css",'/select2/css/select2.min.css');
+			$this->data['css_files'] = array('/select2/css/select2.min.css');
 			
 			/* Dropdown list */
 			$this->data['judgesNames'] 	= $this->courts_model->getJudges();
-			$this->data['cities'] 	= $this->districts_model->getCityForParentId($id=null);
+			$this->data['cities'] = $this->districts_model->getCitiesNamewithTehsils();
 
 			/* Get all users */
 			$this->data['users'] 	= $this->ion_auth->users()->result();
 			
 			$this->data['item'] 	= (object) $data;
-	
+			
 			/* Load Template */
 			$this->template->admin_render('admin/courts/add_court', $this->data);
 		}

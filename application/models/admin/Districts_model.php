@@ -7,6 +7,21 @@ class Districts_model extends CI_Model {
     {
         parent::__construct();
     }
+    
+    // cityNames with tehsil name Dropdown options
+    public function getCitiesNamewithTehsils()
+    {
+    	 
+    	$this->db->select('districts.city_name as city_name, teh.id as teh_id, teh.city_name as tehsil_name');
+    	$this->db->from('districts');
+    	$this->db->join("districts teh", "teh.teh_id=districts.id","left");
+    	$this->db->where("districts.teh_id IS NULL");
+    	$this->db->order_by('city_name asc, tehsil_name asc');
+    
+    	$query = $this->db->get();
+    	$result = $query->result();
+    	return $result;
+    }
 
 	public function get_dropdown_city_list($id)
 	{
