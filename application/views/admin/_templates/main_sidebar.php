@@ -75,15 +75,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li class="<?=active_link_controller('users')?>"><a href="<?php echo site_url('admin/users'); ?>"><i class="fa fa-users"></i><?php echo lang('menu_users_list'); ?></a></li>
-                                <li class="<?=active_link_function('users')?>"><a href="<?php echo site_url('admin/users/districts'); ?>"><i class="fa fa-users"></i><?php echo lang('menu_users_districts'); ?></a></li>
+                                <li class="<?=active_link_controller('users')?>"><a href="<?php echo site_url('admin/users'); ?>"><i class="fa fa-list"></i><?php echo lang('menu_users_list'); ?></a></li>
+                                <li class="<?=active_link_function('users')?>"><a href="<?php echo site_url('admin/users/districts'); ?>"><i class="fa fa-list"></i><?php echo lang('menu_users_districts'); ?></a></li>
                                 <li class="<?=active_link_controller('groups')?>"><a href="<?php echo site_url('admin/groups'); ?>"><i class="fa fa-shield"></i><?php echo lang('menu_security_groups'); ?></a></li>
                             </ul>
                         </li>
 
                         <li class="treeview <?=active_link_controller('districts')?>">
                             <a href="#">
-                                <i class="fa fa-bars"></i><span><?php echo lang('menu_districts'); ?></span>
+                                <i class="fa fa-map-marker"></i><span><?php echo lang('menu_districts'); ?></span>
                                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
                             <ul class="treeview-menu">

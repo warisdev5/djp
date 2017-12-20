@@ -34,8 +34,14 @@ class Users extends District_Controller {
 			$this->data['sub_title'] = lang('menu_users_list');
 			
 			$user = $this->ion_auth->user()->row();
-			
 			$userGroup = $this->core_model->getLoggin_userGroup($user->id, $user->city_id);
+			
+			if ($userGroup->name !='district')
+			{
+				$this->session->set_flashdata('message','You can not view this page!');
+				$this->session->set_flashdata('message_type','warning');
+				redirect('district/dashboard');
+			}
 			
 			if ($userGroup->name == 'district')
 			{

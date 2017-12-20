@@ -48,28 +48,31 @@ class Courts extends Admin_Controller {
 	
 	public function check_unique_court_name($value, $id)
 	{
-		echo $city_id = $this->input->post('city_id');
+		$city_id = $this->input->post('city_id');
 		
 		$this->form_validation->set_message('check_unique_court_name','This judge is already exist!');
 	
 		$judges = $this->courts_model->check_unique_court_name($id);
-			
-			foreach ($judges as $key => $val )
+		
+		foreach ($judges as $r )
+		{
+			if ($r->judge_id == $value )
 			{
-				if ( $judges[$key]->judge_id == $value && $judges[$key]->city_id == $city_id )
+				if ($r->city_id == $city_id)
 				{
-					$returnVal = 1;
+					return false;
 				} else {
-					$returnVal = 0;
+					$retnValue = 0;
 				}
-			}
-			
-			if ($returnVal == 1 ) 
-			{
-				return false;
+				
 			} else {
-				return true;
+				$retnValue = 0;
 			}
+		}
+		if ($retnValue == 0 )
+		{
+			return true;
+		}
 	
 	}
 	
@@ -96,7 +99,7 @@ class Courts extends Admin_Controller {
 		$this->data['cities'] = $this->districts_model->getCitiesNamewithTehsils();
 		
 // 		echo '<pre>';
-//  		var_dump($this->data['cities']);
+//  		var_dump($this->data['judgesNames']);
 // 		die();
 		
 		
@@ -108,7 +111,7 @@ class Courts extends Admin_Controller {
 	{
 		$this->data['item'] = $this->courts_model->getCourtForEdit($id);
 		
-		$this->data['maincities'] = $this->courts_model->getCity();
+// 		$this->data['maincities'] = $this->courts_model->getCity();
 //		
 // 		echo '<pre>';
 // 		var_dump($this->data['item']);
@@ -224,6 +227,37 @@ class Courts extends Admin_Controller {
 	
 			redirect('admin/courts/add_court');
 		}
+	}
+	
+	public function delete_court($id)
+	{
+		if ( !$this->ion_auth->is_Admin() )
+		{
+			$this->session->set_flashdata('message','You are not authorized user to delete court!');
+			$this->session->set_flashdata('message_type','warning');
+			redirect('admin/dashboard');
+		}
+		else
+		{
+			if (!$id){
+				
+				$this->session->set_flashdata('message','Record not found!');
+				$this->session->set_flashdata('message_type','warning');
+				redirect('admin/courts');
+			}
+			if($this->courts_model->delete_court($id) > 0)
+			{
+				$this->session->set_flashdata('message','The court name have deleted!');
+				$this->session->set_flashdata('message_type','success');
+			}
+			else
+			{
+				$this->session->set_flashdata('message','The court name could not be deleted!');
+				$this->session->set_flashdata('message_type','danger');
+			}
+			redirect('admin/courts');
+		}
+		
 	}
 	
 	public function judges()

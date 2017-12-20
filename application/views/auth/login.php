@@ -50,3 +50,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <?php echo anchor('#', lang('auth_new_member')); ?><br />
 <?php endif; ?>
             </div>
+<script>
+$(document).ready(function(){
+	$('#identity').focus();
+});
+</script>

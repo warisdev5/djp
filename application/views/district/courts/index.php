@@ -8,7 +8,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="box">
 			<div class="box-header with-border">
             	<h3 class="box-title"><?php echo $sub_title?></h3>
-            	<?php echo anchor('admin/courts/add_court', '<span class="btn-label"><i class="fa fa-plus"></i></span> '. lang('menu_court_add'), array('class' => 'btn btn-primary btn-labeled btn-flat hidden-print pull-right')); ?>
 			</div>
 			<div class="box-body">
                 
@@ -20,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <th>Court Name</th>
                             <th>Designation</th>
                             <th>Posting City</th>
-                            <th>Type</th>                            
+                            <th>Type</th>
                             <th>User</th>
                             <th>Sorting #</th>
                             <th class="hidden-print">Action</th>
@@ -41,8 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<td><?php echo $item->user; ?></td>
 								<td><?php echo $item->sorting; ?></td>
 								<td class="hidden-print">
-									<?php echo anchor('admin/courts/edit_court/'.$item->id, '<i class="fa fa-edit"></i>','class="btn btn-primary btn-sm m-r-5"'); ?>
-									<?php echo anchor('admin/courts/delete_court/'.$item->id, '<i class="fa fa-trash-o"></i>','class="btn btn-danger btn-sm m-r-5"'); ?>
+									<?php echo anchor('district/courts/edit_court/'.$item->id, '<i class="fa fa-edit"></i>','class="btn btn-primary btn-sm m-r-5"'); ?>
 								</td>
 							</tr>
 							

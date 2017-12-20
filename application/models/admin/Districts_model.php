@@ -22,17 +22,28 @@ class Districts_model extends CI_Model {
     	$result = $query->result();
     	return $result;
     }
+    // get cities by parrent id
+    public function getCitiesByParrentID($id)
+    {
+    	$this->db->select('id, city_name');
+    	$this->db->from('districts');
+    	$this->db->where('teh_id', $id);
+    	$this->db->order_by('sorting asc');
+    	$query = $this->db->get();
+    	$result = $query->result();
+    	return $result;
+    }
 
-	public function get_dropdown_city_list($id)
-	{
-		$this->db->select('id, city_name');
-		$this->db->from('districts');
-		$this->db->where('teh_id', $id);
-		$this->db->order_by('sorting asc');
-		$query = $this->db->get();
-		$result = $query->result();
-		return $result;
-	}
+// 	public function get_dropdown_city_list($id)
+// 	{
+// 		$this->db->select('id, city_name');
+// 		$this->db->from('districts');
+// 		$this->db->where('teh_id', $id);
+// 		$this->db->order_by('sorting asc');
+// 		$query = $this->db->get();
+// 		$result = $query->result();
+// 		return $result;
+// 	}
 	
 	public function check_unique_city($id)
 	{

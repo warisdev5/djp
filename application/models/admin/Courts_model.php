@@ -24,6 +24,22 @@ class Courts_model extends CI_Model {
 //     	return $names;
     }
     
+    public function check_uniqueUserDefinedCourt($id)
+    {
+    	$this->db->select('user_id');
+    	$this->db->where('id !=', $id);
+    	$this->db->from('courts');
+    	$query = $this->db->get();
+    	$result = $query->result();
+//     	return $result;
+    
+    	$names =  array();
+    	foreach ($result as $r){
+    		$names[$r->user_id] = $r;
+		}
+    	return $names;
+    }
+    
     public function getCourtForEdit($id)
     {
     	$this->db->select('*');
@@ -66,6 +82,24 @@ class Courts_model extends CI_Model {
     		$status = $this->db->update('courts');
     	}
     
+    	$status = $this->db->affected_rows();
+    	return $status;
+    }
+    
+    public function delete_court($id)
+    {
+    	$this->db->where('id', $id);
+    	$this->db->delete('courts');
+    	$result = $this->db->affected_rows();
+    	return $result;
+    }
+    
+    public function save_courtByDistirctUser($data)
+    {
+    	$this->db->set('user_id', (!empty($data['user_id']) ? $data['user_id'] : NULL ));
+    	$this->db->set('sorting', $data['sorting']);
+    	$this->db->where('id',$data['id']);
+    	$status = $this->db->update('courts');
     	$status = $this->db->affected_rows();
     	return $status;
     }
@@ -161,6 +195,7 @@ class Courts_model extends CI_Model {
     	$this->db->from('judges as a');
     	$this->db->join('designation as d', 'd.id = a.desgn_id', 'left');
     	$this->db->join('districts as c', 'c.id = a.city_id', 'left');
+    	$this->db->where('a.active', 'Yes');
     	$this->db->order_by('a.desgn_id asc, a.seniority asc');
     	$query = $this->db->get();
     	$result = $query->result();
@@ -219,6 +254,23 @@ class Courts_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('designation');
 		$this->db->order_by('sorting asc');
+		$query = $this->db->get();
+		$result = $query->result();
+		return $result;
+	}
+	
+	// District wise COURTS 
+	function getCourtsByCityId($cityId)
+	{
+		$this->db->select('courts.*,j.judge_name, courts_type.court_type, d.desgn_name as designation, city.city_name as city, CONCAT(first_name," ",last_name, "<br>(",email,")") as user');
+		$this->db->from('courts');
+		$this->db->join('judges as j', 'j.id = courts.judge_id', 'left');
+		$this->db->join('courts_type', 'courts_type.id = courts.court_type_id', 'left');
+		$this->db->join('designation as d', 'd.id = j.desgn_id', 'left');
+		$this->db->join('districts as city', 'city.id = courts.city_id', 'left');
+		$this->db->join('users', 'users.id = courts.user_id', 'left');
+		$this->db->where('city.teh_id', $cityId);
+		$this->db->order_by('d.id asc, j.seniority asc');
 		$query = $this->db->get();
 		$result = $query->result();
 		return $result;

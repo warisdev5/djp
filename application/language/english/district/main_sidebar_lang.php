@@ -19,10 +19,12 @@ $lang['menu_search'] = 'Search';
 /* * */$lang['menu_main_navigation']            = 'Main Navigation';
 /* ****** */$lang['menu_dashboard']             = 'Dashboard';
 
+/* * */$lang['menu_courts']         		    = 'Courts';
+/* ****** */$lang['menu_courts_list']           = 'Courts list';
+/* ****** */$lang['menu_court_edit']            = 'Edit court';
 
-/* * */$lang['menu_administration']             = 'Administration';
-/* ****** */$lang['menu_users']                 = 'Users';
-/* ****** */$lang['menu_users_list']            = 'District Users list';
+/* * */$lang['menu_users']             			= 'Users';
+/* ****** */$lang['menu_users_list']            = 'Users list';
 
 /* *********** */$lang['menu_users_profile']    = 'Profile';
 /* *********** */$lang['menu_users_deactivate'] = 'Deactivate';

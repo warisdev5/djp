@@ -46,13 +46,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </a>
                         </li>
                         
+                        <li class="treeview <?=active_link_controller('courts')?>">
+                            <a href="#">
+                                <i class="fa  fa-balance-scale"></i><span><?php echo lang('menu_courts'); ?></span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="<?=active_link_controller('courts')?>"><a href="<?php echo site_url('district/courts'); ?>"><i class="fa fa-list"></i><?php echo lang('menu_courts_list'); ?></a></li>
+                            </ul>
+                        </li>
+                        
                         <li class="treeview <?=active_link_controller('users')?><?=active_link_controller('groups')?>">
                             <a href="#">
                                 <i class="fa fa-users"></i><span><?php echo lang('menu_users'); ?></span>
                                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li class="<?=active_link_controller('users')?>"><a href="<?php echo site_url('district/users'); ?>"><i class="fa fa-users"></i><?php echo lang('menu_users_list'); ?></a></li>
+                                <li class="<?=active_link_controller('users')?>"><a href="<?php echo site_url('district/users'); ?>"><i class="fa fa-list"></i><?php echo lang('menu_users_list'); ?></a></li>
                             </ul>
                         </li>
       

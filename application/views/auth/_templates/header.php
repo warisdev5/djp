@@ -28,6 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <script src="<?php echo base_url($plugins_dir . '/respond/respond.min.js'); ?>"></script>
         <![endif]-->
 <?php endif; ?>
+		<script src="<?php echo base_url($frameworks_dir . '/jquery/jquery.min.js'); ?>"></script>
     </head>
     <body class="hold-transition login-page">
         <div class="login-box">

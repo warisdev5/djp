@@ -59,7 +59,7 @@ class Districts extends Admin_Controller {
 		// load css files
 		$this->data['css_files'] = array('/select2/css/select2.min.css');
 		
-		$this->data['cities'] = $this->districts_model->get_dropdown_city_list($id=null);
+		$this->data['cities'] = $this->districts_model->getCitiesByParrentID($id=null);
 		
 		/* Load Template */
 		$this->template->admin_render('admin/districts/add_city', $this->data);
@@ -88,7 +88,7 @@ class Districts extends Admin_Controller {
 			// load css files
 			$this->data['css_files'] = array('/select2/css/select2.min.css');
 				
-			$this->data['cities'] = $this->districts_model->get_dropdown_city_list($id=NULL);
+			$this->data['cities'] = $this->districts_model->getCitiesByParrentID($id=NULL);
 				
 			/* Load Template */
 			$this->template->admin_render('admin/districts/add_city', $this->data);
@@ -132,7 +132,7 @@ class Districts extends Admin_Controller {
 			// load css files
 			$this->data['css_files'] = array('/select2/css/select2.min.css');
 			
-			$this->data['cities'] = $this->districts_model->get_dropdown_city_list($id=null);
+			$this->data['cities'] = $this->districts_model->getCitiesByParrentID($id=null);
 			
 			$this->data['item'] = (object) $data;
 			

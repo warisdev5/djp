@@ -72,10 +72,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<section class="content">
 				
 				<?php if($message = $this->session->flashdata('message')) : ?>
-					<div class="col-md-6 col-md-offset-3 hidden-print m-t-10">
+					<div class="col-md-12 hidden-print m-t-10">
+						<div class="col-md-6 col-md-offset-3">
 						<div class="alert alert-<?php echo $this->session->flashdata('message_type');?> alert-dismissible">
 				     		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				      		<strong>Message</strong> <?php echo $message?>
+				      		<strong>Message! </strong><p><?php echo $message?></p>
+				    	</div>
 				    	</div>
 			    	</div>
 				<?php endif; ?>

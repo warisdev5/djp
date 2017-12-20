@@ -96,7 +96,7 @@ class Auth extends MY_Controller {
                     'type'        => 'email',
                     'value'       => $this->form_validation->set_value('identity'),
                     'class'       => 'form-control',
-                    'placeholder' => lang('auth_your_email')
+                    'placeholder' => lang('auth_your_email'),
                 );
                 $this->data['password'] = array(
                     'name'        => 'password',
