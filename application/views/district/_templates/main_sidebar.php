@@ -65,6 +65,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <li class="<?=active_link_controller('users')?>"><a href="<?php echo site_url('district/users'); ?>"><i class="fa fa-list"></i><?php echo lang('menu_users_list'); ?></a></li>
                             </ul>
                         </li>
+                        
+                        
+                        
+                        
+                        
+                          <li class="treeview <?=active_link_controller('cases')?><?=active_link_controller('groups')?>">
+                            <a href="#">
+                                <i class="fa fa-file-archive-o"></i><span><?php echo lang('menu_cases'); ?></span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="<?=active_link_controller('cases')?>"><a href="<?php echo site_url('district/cases/create'); ?>"><i class="fa fa-edit"></i><?php echo lang('menu_enter_cases'); ?></a></li>
+                            </ul>
+                        </li>
       
 
 

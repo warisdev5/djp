@@ -276,6 +276,19 @@ class Courts_model extends CI_Model {
 		return $result;
 	}
 	
+	public function getCourtsByUser($userId)
+	{
+		$this->db->select('courts.id, judges.judge_name, designation.desgn_name as designation, districts.city_name as city');
+		$this->db->from('courts');
+		$this->db->join('judges', 'judges.id = courts.judge_id', 'left');
+		$this->db->join('designation', 'designation.id = judges.desgn_id','left');
+		$this->db->join('districts', 'districts.id = courts.city_id', 'left');
+		$this->db->where('courts.user_id', $userId);
+		$query = $this->db->get();
+		$result = $query->result();
+		return $result;
+	}
+	
 	/* public function get_dropdown_cats_list()
 	{
 		$this->db->select('id, cat_name');

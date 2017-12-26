@@ -62,6 +62,13 @@ class MY_Controller extends CI_Controller
             $this->data['mobile_ie'] = FALSE;
         }
 	}
+        
+public function dd($obj){
+    echo "<pre>";
+    print_r($obj);
+    echo "<pre>";
+    exit;
+}
 }
 
 class Admin_Controller extends MY_Controller
@@ -140,7 +147,11 @@ class District_Controller extends MY_Controller
 				$this->load->library('admin/breadcrumbs');
 				$this->load->model('core_model');
 				$this->load->model('admin/districts_model');
-				// 		$this->load->model('admin/core_model');
+				 		/* Load :: Common */
+                                $this->lang->load('district/main_case');
+                                $this->lang->load('district/main_case');
+
+                                // 		$this->load->model('admin/core_model');
 				$this->load->helper('menu');
 				$this->lang->load(array('admin/main_header', 'district/main_sidebar', 'admin/footer', 'admin/actions'));
 					
