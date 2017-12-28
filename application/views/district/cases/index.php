@@ -14,12 +14,12 @@
 			<?php endif; ?>
                
 			<div class="box-body">
-				<div class="col-sm-6">
-					
+				
 				<?php echo form_open(base_url('district/cases/save'),'class="form-horizontal"'); ?>
+				<div class="col-sm-8">
                             
 					<div class="form-group">
-						<label class="col-sm-4 control-label">Judge Name</label>
+						<label class="col-sm-4 control-label"><?php echo lang("cases_select_judge"); ?></label>
 						<div class="col-sm-8">
 							<?php 
 								$options = array();
@@ -37,74 +37,39 @@
 						
 					<div class="form-group">
 						<label class="col-sm-4 control-label"><?php echo lang("cases_select_date"); ?>:</label>
-						<div class="col-sm-8">
+						<div class="col-sm-4">
 							<input id="date-of-report" name="heading[date_of_report]" type="text" class="form-control datepicker" placeholder="<?php echo lang("cases_select_date"); ?>">
 						</div>
 					</div>
+				</div>
 						
-					<div class="form-group">
-						<label class="col-sm-4 control-label">SELECT HEADING</label>
-						<div class="col-sm-8">
-							<select id="heading" name="heading[heading_id]" class="form-control heading select2" >
-                    			<option value="" selected="">...SELECT HEADING...</option>
-								<?php
-								
-	                            	$prev="";
-	                            	
-									foreach($Heads as $head) : 
-										$selected='';
-	//									if($head->sub_id == $item->sub_id){
-	//									$selected="selected='selected'";
-	//								}
-	                                                        
-								?>
-                                             
-						        <?php
-	                            	if($head->main_name!=$prev):
-	                            	
-	                                	echo "<optgroup label='{$head->main_name}'>";
-	                                	$prev=$head->main_name;
-	                                	
-									endif;
-									
-	                                if(!empty($head->sub_id))
-	                                {
-	                            ?>
-                                            
-								<option value="<?php echo $head->sub_id; ?>" <?php echo $selected; ?>>
-                            		<?php echo $head->sub_name; ?>
-                            	</option>
-                                                        
-								<?php
-                                }
-									if($head->main_name!=$prev){
-										echo "</optgroup>";
-									}
-								?>
-                            
-								<?php 
-									endforeach;
-								?>
-
-							</select>
-						</div>
-					</div>
+					
 						
                         <table id="dataTable" class="table table-striped table-bordered">
                 	
                         	<thead>
+                        		
                     			<tr>
-                        			<th><?php echo lang('cases_select_category');?></th> 
-                       
-                    				<th colspan="2"><?php echo lang('cases_select_amount');?></th>
-                    
+                        			<th rowspan="2"><?php echo lang('cases_select_category');?></th> 
+                    				<th rowspan="2"><?php echo lang('cases_fresh');?></th>
+                    				<th class="text-center" colspan="2"><?php echo lang('cases_decided');?></th>
+                    				<th class="text-center" colspan="3"><?php echo lang('cases_transfer');?></th>
+                    				<th rowspan="2"></th>                   
 								</tr>
+								<tr>
+									<th><?php echo lang('cases_contested');?></th>
+                    				<th><?php echo lang('cases_un-contested');?></th>
+                    				<th><?php echo lang('cases_transfer_date');?></th>
+                    				<th><?php echo lang('cases_transfer_from');?></th>
+                    				<th><?php echo lang('cases_transfer_to');?></th>  
+								</tr>
+								
 							</thead>
 							
 							<tbody>
 					
                     			<tr>
-                                    <td>
+                                    <td class="col-md-3">
                                         	
 										<?php 
 										$options = array();
@@ -115,7 +80,7 @@
 										}
 										echo form_dropdown('heading[category_id][]', $options
 											,"",
-											array('class' => 'form-control col-sm-5',"id"=>"category_id"));
+											array('class' => 'form-control',"id"=>"category_id"));
 									?>
 									<?php echo form_error('category_id', '<div class="error">', '</div>'); ?>
 				
@@ -123,11 +88,16 @@
                                     </td>
                            
 	                                <td>
-	                                    <input type="number" value="" id="amount" name="heading[amount][]" placeholder="<?php echo lang('cases_select_amount');?>" class="form-control">
+	                                    <input type="number" value="" id="amount" name="heading[amount][]" placeholder="i.e: 123" class="form-control">
 	                                </td>
+	                                <td><input type="number" name="" value="" id="contested" placeholder="i.e: 123"  class="form-control"></td>
+	                                <td><input type="number" name="" value="" id="un-contested" placeholder="i.e: 123"  class="form-control"></td>
+	                                <td><input type="text" name="" value="" id="transfer-date" placeholder="i.e: 123"  class="form-control datepicker"></td>
+	                                <td><input type="number" name="" value="" id="transfer-from" placeholder="i.e: 123"  class="form-control"></td>
+	                                <td><input type="number" name="" value="" id="transfer-to" placeholder="i.e: 123"  class="form-control"></td>
                                 
                                 	<td class="buttons">
-                                		<span class="btn btn-danger btn-sm  btn-add"><i class="fa fa-plus fa-2x "></i></span>
+                                		<span class="btn btn-primary btn-sm  btn-add"><i class="fa fa-plus fa-2x "></i></span>
                             		</td>
 								</tr>
 								
@@ -136,12 +106,10 @@
 					
 						
 					<div class="form-group">
-						<div class="col-sm-6 col-sm-offset-3">
-							<input type="submit" value="<?php echo lang("cases_save_info"); ?>" class="btn btn-lg btn-info">
+						<div class="col-sm-6">
+							<input type="submit" value="<?php echo lang("cases_save_info"); ?>" class="btn btn-primary">
 						</div>
 					</div>
-						
-				</div>
                             
 				<?php echo form_close(); ?>
                             
@@ -171,7 +139,7 @@ $(document).on("click",".btn-add",function(){
 
         newEntry.find('input').val('');
         controlForm.find('tr:not(:last) .buttons .btn-add')
-            .removeClass('btn-add').addClass('btn-remove')
+            .removeClass('btn-add btn-primary').addClass('btn-remove btn-danger')
             .find(".fa-plus").removeClass("fa-plus").addClass("fa-remove");
     
     
