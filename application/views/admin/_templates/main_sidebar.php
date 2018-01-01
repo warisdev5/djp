@@ -101,6 +101,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             	<li class="<?=active_link_function('index')?>"><a href="<?php echo site_url('admin/category');?>"><i class="fa fa-list"></i><?php echo lang('menu_category_list'); ?></a></li>
                             	<li class="<?=active_link_function('add')?>"><a href="<?php echo site_url('admin/category/add');?>"><i class="fa fa-plus-square"></i><?php echo lang('menu_category_add'); ?></a></li>
                             </ul>
+                            
+                            <ul class="treeview-menu">
+                            	<li class="<?=active_link_function('njp_categories')?>"><a href="<?php echo site_url('admin/category/njp_categories');?>"><i class="fa fa-list"></i><?php echo lang('menu_njp_cats'); ?></a></li>
+                            	<li class="<?=active_link_function('njp_category_add')?>"><a href="<?php echo site_url('admin/category/njp_category_add');?>"><i class="fa fa-plus-square"></i><?php echo lang('menu_njp_cat_add'); ?></a></li>
+                            </ul>
+                            
+                            <ul class="treeview-menu">
+                            	<li class="<?=active_link_function('monthly_categories')?>"><a href="<?php echo site_url('admin/category/monthly_categories');?>"><i class="fa fa-list"></i><?php echo lang('menu_monthly_cats'); ?></a></li>
+                            	<li class="<?=active_link_function('monthly_category_add')?>"><a href="<?php echo site_url('admin/category/monthly_category_add');?>"><i class="fa fa-plus-square"></i><?php echo lang('menu_monthly_cat_add'); ?></a></li>
+                            </ul>
+                            
                         </li>
                         
                          <li class="treeview <?=active_link_controller('heads')?>">

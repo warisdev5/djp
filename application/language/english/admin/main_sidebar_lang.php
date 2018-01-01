@@ -39,6 +39,8 @@ $lang['menu_search'] = 'Search';
 /* **************** */$lang['menu_int_admin']   = 'Administration';
 /* **************** */$lang['menu_int_public']  = 'Public';
 
+/* ****** */$lang['menu_reports'] 		 		= 'Reports';
+
 /* ****** */$lang['menu_files']                 = 'Files';
 /* ****** */$lang['menu_database_utility']      = 'Database utility';
 
@@ -62,6 +64,12 @@ $lang['menu_search'] = 'Search';
 /* *********** */$lang['menu_category_list']    = 'Categories List';
 /* *********** */$lang['menu_category_add']     = 'Add category';
 /* *********** */$lang['menu_category_edit']    = 'Edit category';
+/* *********** */$lang['menu_njp_cats'] 		= 'NJP Categories List';
+/* *********** */$lang['menu_njp_cat_add'] 		= 'NJP Category Add';
+/* *********** */$lang['menu_njp_cat_edit'] 	= 'NJP Category Edit';
+/* *********** */$lang['menu_monthly_cats'] 	= 'Monthly Categories List';
+/* *********** */$lang['menu_monthly_cat_add'] 	= 'Monthly Category Add';
+/* *********** */$lang['menu_monthly_cat_edit'] = 'Monthly Category Edit';
 
 
 /* * */$lang['menu_webapp']                     = 'Web application';

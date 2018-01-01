@@ -18,6 +18,17 @@ class Category_model extends CI_Model {
 		$result = $query->result();
 		return $result;
 	}
+	
+	public function getCategoriesByCourtType($id)
+	{
+		$this->db->select('a.id, a.cat_name, b.case_type');		
+		$this->db->from('categories as a');
+		$this->db->join('cases_type as b', 'b.id = a.case_type_id', 'left');
+		$this->db->where('a.court_type_id', $id);
+		$query = $this->db->get();
+		$result = $query->result();
+		return $result;
+	}
 
 	public function check_unique_category($id)
 	{
@@ -99,5 +110,90 @@ class Category_model extends CI_Model {
 // 		return $categories;
 	}
 	
+	function getNJPCategories()
+	{
+		$this->db->select('a.*, b.court_type');
+		$this->db->from('categories_njp as a');
+		$this->db->join('courts_type as b', 'b.id = a.court_type_id', 'left');
+		$this->db->order_by('a.sorting asc, a.court_type_id asc');
+		$query = $this->db->get();
+		$result = $query->result();
+		return $result;
+	}
+	
+	function getCategoryNJPForEdit($id)
+	{
+		$this->db->select('*');
+		$this->db->from('categories_njp');
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+		$result = $query->row();
+		return $result;
+	}
+	
+	function njp_categories_save($data)
+	{
+		//set value by name
+		$this->db->set('cat_name', $data['cat_name']);
+		$this->db->set('court_type_id', (!empty($data['court_type_id']) ? $data['court_type_id'] : NULL ) );
+		$this->db->set('cat_id', (!empty($data['cat_id']) ? $data['cat_id'] : NULL ) );
+		$this->db->set('sorting', $data['sorting']);
+		
+		if ($data['id'] == 0 )
+		{
+			$status = $this->db->insert('categories_njp');
+		}
+		else
+		{
+			$this->db->where('id',$data['id']);
+			$status = $this->db->update('categories_njp');
+		}
+		
+		$status = $this->db->affected_rows();
+		return $status;
+	}
+	
+	function getMonthlyCategories()
+	{
+		$this->db->select('a.*, b.court_type');
+		$this->db->from('categories_monthly as a');
+		$this->db->join('courts_type as b', 'b.id = a.court_type_id', 'left');
+		$this->db->order_by('a.sorting asc, a.court_type_id asc');
+		$query = $this->db->get();
+		$result = $query->result();
+		return $result;
+	}
+	
+	function getCategoryMonthlyForEdit($id)
+	{
+		$this->db->select('*');
+		$this->db->from('categories_monthly');
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+		$result = $query->row();
+		return $result;
+	}
+	
+	function monthly_categories_save($data)
+	{
+		//set value by name
+		$this->db->set('cat_name', $data['cat_name']);
+		$this->db->set('court_type_id', (!empty($data['court_type_id']) ? $data['court_type_id'] : NULL ) );
+		$this->db->set('cat_id', (!empty($data['cat_id']) ? $data['cat_id'] : NULL ) );
+		$this->db->set('sorting', $data['sorting']);
+	
+		if ($data['id'] == 0 )
+		{
+			$status = $this->db->insert('categories_monthly');
+		}
+		else
+		{
+			$this->db->where('id',$data['id']);
+			$status = $this->db->update('categories_monthly');
+		}
+	
+		$status = $this->db->affected_rows();
+		return $status;
+	}
 	
 }

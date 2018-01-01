@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.2
--- http://www.phpmyadmin.net
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2017 at 08:06 AM
--- Server version: 5.7.9
--- PHP Version: 7.0.0
+-- Generation Time: Jan 01, 2018 at 04:14 PM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,9 +28,8 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin_preferences`
 --
 
-DROP TABLE IF EXISTS `admin_preferences`;
-CREATE TABLE IF NOT EXISTS `admin_preferences` (
-  `id` tinyint(1) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `admin_preferences` (
+  `id` tinyint(1) NOT NULL,
   `user_panel` tinyint(1) NOT NULL DEFAULT '0',
   `sidebar_form` tinyint(1) NOT NULL DEFAULT '0',
   `messages_menu` tinyint(1) NOT NULL DEFAULT '0',
@@ -36,9 +37,8 @@ CREATE TABLE IF NOT EXISTS `admin_preferences` (
   `tasks_menu` tinyint(1) NOT NULL DEFAULT '0',
   `user_menu` tinyint(1) NOT NULL DEFAULT '1',
   `ctrl_sidebar` tinyint(1) NOT NULL DEFAULT '0',
-  `transition_page` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `transition_page` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `admin_preferences`
@@ -53,12 +53,10 @@ INSERT INTO `admin_preferences` (`id`, `user_panel`, `sidebar_form`, `messages_m
 -- Table structure for table `cases_type`
 --
 
-DROP TABLE IF EXISTS `cases_type`;
-CREATE TABLE IF NOT EXISTS `cases_type` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `case_type` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE `cases_type` (
+  `id` int(11) NOT NULL,
+  `case_type` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `cases_type`
@@ -74,20 +72,15 @@ INSERT INTO `cases_type` (`id`, `case_type`) VALUES
 -- Table structure for table `categories`
 --
 
-DROP TABLE IF EXISTS `categories`;
-CREATE TABLE IF NOT EXISTS `categories` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
   `cat_name` varchar(50) DEFAULT NULL,
   `court_type_id` int(11) DEFAULT NULL,
   `case_type_id` int(11) DEFAULT NULL,
   `cat_id` int(11) DEFAULT NULL,
   `active` varchar(10) DEFAULT NULL,
-  `sorting` mediumint(9) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `cat_id` (`cat_id`),
-  KEY `court_type_id` (`court_type_id`),
-  KEY `case_type_id` (`case_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
+  `sorting` mediumint(9) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `categories`
@@ -114,24 +107,63 @@ INSERT INTO `categories` (`id`, `cat_name`, `court_type_id`, `case_type_id`, `ca
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `categories_monthly`
+--
+
+CREATE TABLE `categories_monthly` (
+  `id` int(11) NOT NULL,
+  `cat_name` varchar(100) NOT NULL,
+  `cat_id` int(11) DEFAULT NULL,
+  `court_type_id` int(11) DEFAULT NULL,
+  `sorting` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `categories_monthly`
+--
+
+INSERT INTO `categories_monthly` (`id`, `cat_name`, `cat_id`, `court_type_id`, `sorting`) VALUES
+(7, 'Sessions Murder', 15, 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories_njp`
+--
+
+CREATE TABLE `categories_njp` (
+  `id` int(11) NOT NULL,
+  `cat_name` varchar(100) NOT NULL,
+  `cat_id` int(11) DEFAULT NULL,
+  `court_type_id` int(11) DEFAULT NULL,
+  `sorting` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `categories_njp`
+--
+
+INSERT INTO `categories_njp` (`id`, `cat_name`, `cat_id`, `court_type_id`, `sorting`) VALUES
+(1, 'bail', 22, NULL, 0),
+(2, 'Session ', 15, NULL, 0),
+(5, 'Bail Application', 22, 1, 0),
+(6, 'Sessions Murder', 15, 1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `courts`
 --
 
-DROP TABLE IF EXISTS `courts`;
-CREATE TABLE IF NOT EXISTS `courts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `courts` (
+  `id` int(11) NOT NULL,
   `court_number` varchar(30) NOT NULL,
   `judge_id` int(11) DEFAULT NULL,
   `city_id` int(11) DEFAULT NULL,
   `court_type_id` int(11) DEFAULT NULL,
   `user_id` int(11) UNSIGNED DEFAULT NULL,
-  `sorting` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `judge_id` (`judge_id`),
-  KEY `city_id` (`city_id`),
-  KEY `court_type_id` (`court_type_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+  `sorting` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `courts`
@@ -139,7 +171,10 @@ CREATE TABLE IF NOT EXISTS `courts` (
 
 INSERT INTO `courts` (`id`, `court_number`, `judge_id`, `city_id`, `court_type_id`, `user_id`, `sorting`) VALUES
 (8, 'Lahore-1', 14, NULL, 1, NULL, 0),
-(9, 'Lahore-2', 3, NULL, 1, NULL, 0);
+(9, 'Lahore-2', 3, NULL, 1, NULL, 0),
+(10, 'Faisalabad Court No. 1', 3, 7, 1, 5, 0),
+(11, 'Faisalabad Court No. 2', 21, 7, 1, 12, 0),
+(12, 'FSD Court # 3', 19, 5, 1, 12, 0);
 
 -- --------------------------------------------------------
 
@@ -147,12 +182,10 @@ INSERT INTO `courts` (`id`, `court_number`, `judge_id`, `city_id`, `court_type_i
 -- Table structure for table `courts_type`
 --
 
-DROP TABLE IF EXISTS `courts_type`;
-CREATE TABLE IF NOT EXISTS `courts_type` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `court_type` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE `courts_type` (
+  `id` int(11) NOT NULL,
+  `court_type` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `courts_type`
@@ -168,15 +201,13 @@ INSERT INTO `courts_type` (`id`, `court_type`) VALUES
 -- Table structure for table `designation`
 --
 
-DROP TABLE IF EXISTS `designation`;
-CREATE TABLE IF NOT EXISTS `designation` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `designation` (
+  `id` int(11) NOT NULL,
   `desgn_name` varchar(100) NOT NULL,
   `desgn_short_name` varchar(10) NOT NULL,
   `sorting` smallint(6) DEFAULT NULL,
-  `active` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+  `active` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `designation`
@@ -201,16 +232,13 @@ INSERT INTO `designation` (`id`, `desgn_name`, `desgn_short_name`, `sorting`, `a
 -- Table structure for table `districts`
 --
 
-DROP TABLE IF EXISTS `districts`;
-CREATE TABLE IF NOT EXISTS `districts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `districts` (
+  `id` int(11) NOT NULL,
   `city_name` varchar(50) NOT NULL,
   `teh_id` int(11) DEFAULT NULL,
   `active` varchar(10) NOT NULL,
-  `sorting` mediumint(9) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `teh_id` (`teh_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+  `sorting` mediumint(9) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `districts`
@@ -233,14 +261,12 @@ INSERT INTO `districts` (`id`, `city_name`, `teh_id`, `active`, `sorting`) VALUE
 -- Table structure for table `groups`
 --
 
-DROP TABLE IF EXISTS `groups`;
-CREATE TABLE IF NOT EXISTS `groups` (
-  `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `groups` (
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `name` varchar(20) NOT NULL,
   `description` varchar(100) NOT NULL,
-  `bgcolor` char(7) NOT NULL DEFAULT '#607D8B',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `bgcolor` char(7) NOT NULL DEFAULT '#607D8B'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `groups`
@@ -258,16 +284,13 @@ INSERT INTO `groups` (`id`, `name`, `description`, `bgcolor`) VALUES
 -- Table structure for table `header_information`
 --
 
-DROP TABLE IF EXISTS `header_information`;
-CREATE TABLE IF NOT EXISTS `header_information` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `header_information` (
+  `id` int(11) NOT NULL,
   `name` varchar(150) NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
   `priority` int(11) DEFAULT NULL,
-  `active` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+  `active` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `header_information`
@@ -287,7 +310,9 @@ INSERT INTO `header_information` (`id`, `name`, `parent_id`, `priority`, `active
 (23, 'Received By Transfer', 20, NULL, 0),
 (24, 'Contested', 20, NULL, 0),
 (25, 'Uncontested', 20, NULL, 0),
-(26, 'Transfer', 20, NULL, 0);
+(26, 'Transfer', 20, NULL, 0),
+(27, 'Fresh', 13, NULL, 0),
+(28, 'Received By Transfer', 13, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -295,9 +320,8 @@ INSERT INTO `header_information` (`id`, `name`, `parent_id`, `priority`, `active
 -- Table structure for table `judges`
 --
 
-DROP TABLE IF EXISTS `judges`;
-CREATE TABLE IF NOT EXISTS `judges` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `judges` (
+  `id` int(11) NOT NULL,
   `judge_name` varchar(100) DEFAULT NULL,
   `cnic` varchar(16) NOT NULL,
   `desgn_id` int(11) DEFAULT NULL,
@@ -307,11 +331,8 @@ CREATE TABLE IF NOT EXISTS `judges` (
   `city_id` int(11) DEFAULT NULL,
   `gender` varchar(10) DEFAULT NULL,
   `seniority` int(11) DEFAULT NULL,
-  `active` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `desgn_id` (`desgn_id`),
-  KEY `city_id` (`city_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+  `active` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `judges`
@@ -340,13 +361,11 @@ INSERT INTO `judges` (`id`, `judge_name`, `cnic`, `desgn_id`, `date_of_birth`, `
 -- Table structure for table `login_attempts`
 --
 
-DROP TABLE IF EXISTS `login_attempts`;
-CREATE TABLE IF NOT EXISTS `login_attempts` (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `login_attempts` (
+  `id` int(11) UNSIGNED NOT NULL,
   `ip_address` varchar(15) NOT NULL,
   `login` varchar(100) NOT NULL,
-  `time` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `time` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -355,12 +374,10 @@ CREATE TABLE IF NOT EXISTS `login_attempts` (
 -- Table structure for table `public_preferences`
 --
 
-DROP TABLE IF EXISTS `public_preferences`;
-CREATE TABLE IF NOT EXISTS `public_preferences` (
-  `id` int(1) NOT NULL AUTO_INCREMENT,
-  `transition_page` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `public_preferences` (
+  `id` int(1) NOT NULL,
+  `transition_page` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `public_preferences`
@@ -375,20 +392,15 @@ INSERT INTO `public_preferences` (`id`, `transition_page`) VALUES
 -- Table structure for table `report`
 --
 
-DROP TABLE IF EXISTS `report`;
-CREATE TABLE IF NOT EXISTS `report` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `report` (
+  `id` int(11) NOT NULL,
   `court_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `type_id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `date_of_report` datetime NOT NULL,
-  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `court_id` (`court_id`,`category_id`,`type_id`),
-  KEY `category_key` (`category_id`),
-  KEY `heading_id` (`type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `report`
@@ -403,7 +415,9 @@ INSERT INTO `report` (`id`, `court_id`, `category_id`, `type_id`, `amount`, `dat
 (30, 9, 24, 15, 876, '2017-11-30 00:00:00', '2017-12-26 12:22:36'),
 (31, 9, 15, 15, 87, '2017-12-26 00:00:00', '2017-12-26 12:32:38'),
 (32, 9, 24, 15, 98, '2017-12-26 00:00:00', '2017-12-26 12:32:38'),
-(33, 9, 23, 15, 987, '2017-12-26 00:00:00', '2017-12-26 12:32:38');
+(33, 9, 23, 15, 987, '2017-12-26 00:00:00', '2017-12-26 12:32:38'),
+(34, 9, 25, 14, 888, '2017-12-12 00:00:00', '2017-12-26 22:08:27'),
+(35, 9, 21, 14, 88, '2017-12-12 00:00:00', '2017-12-26 22:08:27');
 
 -- --------------------------------------------------------
 
@@ -411,9 +425,8 @@ INSERT INTO `report` (`id`, `court_id`, `category_id`, `type_id`, `amount`, `dat
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `id` int(11) UNSIGNED NOT NULL,
   `ip_address` varchar(15) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -430,19 +443,18 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_name` varchar(50) DEFAULT NULL,
   `company` varchar(100) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
-  `city_id` mediumint(9) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+  `city_id` mediumint(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `city_id`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'ubbKewRMYv31hKaEQcspdO', 1268889823, 1514016820, 1, 'Admin', 'istrator', 'ADMIN', '0', 0),
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'ubbKewRMYv31hKaEQcspdO', 1268889823, 1514817355, 1, 'Admin', 'istrator', 'ADMIN', '0', 0),
 (2, '::1', 'waris', '$2y$08$T/J0wxK/karJnDpatdPCs.ddOj49k35Nel9Gc73MDa69O4w9/lcNO', NULL, 'user@admin.com', NULL, NULL, NULL, 'TkFkFCz9BRUYpPf7zEoGsO', 1512553577, 1512663067, 1, 'Malik1', 'Waris1', 'DSC Fsd1', '03007201629', 0),
 (3, '::1', '', '$2y$08$ufAZIb7A2O.EgRidvi0a1OLQifH5T0JdbAdXF/X3GLd0T3OZCzxh2', NULL, 'super@admin.com', NULL, NULL, NULL, 'U9F82jQp08YIHehPODXfue', 1512570361, 1512581093, 1, 'User', 'Super', 'DSC Fsd', '03139201629', 0),
-(4, '::1', 'Faisalabad', '$2y$08$HhsSGBETyiSCbBM0Xz2ugOh5xA2akfxaH0oTa/yeaqdU1802IYshO', NULL, 'fsd@admin.com', NULL, NULL, NULL, NULL, 1512972787, 1513186481, 1, 'Faisalabad', 'User', '', '0300-7201629', 1),
+(4, '::1', 'Faisalabad', '$2y$08$HhsSGBETyiSCbBM0Xz2ugOh5xA2akfxaH0oTa/yeaqdU1802IYshO', NULL, 'fsd@admin.com', NULL, NULL, NULL, NULL, 1512972787, 1514436068, 1, 'Faisalabad', 'User', '', '0300-7201629', 1),
 (5, '::1', 'ishfaq', '$2y$08$aFiAevMocfM9cabNMIICGugvGLnlwYmkY9G5itGQxzOJtEjN3ZE12', NULL, 'ishfaq11@admin.com', NULL, NULL, NULL, NULL, 1512976414, NULL, 1, 'Muhammad', 'Ishfaq', 'Jhang', '03007373777', 12),
 (6, '::1', '', '$2y$08$wD.8saaPyFHXtlDYA9712Ol7sabVkPCZ6/NWcVXq5sNNOabbw0qzK', NULL, 'ishfaq1@admin.com', NULL, NULL, NULL, NULL, 1512977238, NULL, 1, 'Ali', 'Raza', 'Faisalabad', '9999-9999999', 1),
 (7, '::1', '', '$2y$08$SRjNmGHFsx90/bGRrrd/0uOlJyY28e/mG8EAxPfkwrhgX7gwTD72i', NULL, 'user1@admin.com', NULL, NULL, NULL, NULL, 1513012412, NULL, 1, 'Malik', 'Waris', 'DSC Fsd', '888888888', 0),
@@ -450,7 +462,7 @@ INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`
 (9, '::1', 'sdfsadf', '$2y$08$7b0ZvKvdbZSBnIJoKRLXrepiP19ClybeS/3yf1f2kplL9rVxT5RnS', NULL, 'dsr@admin.com', NULL, NULL, NULL, NULL, 1513012567, NULL, 1, 'sdfsadf', 'sdfsdaf', 'sadfsdaf', '55555555555', 0),
 (10, '::1', '1111', '$2y$08$9v7Ncof6cLVqFSJS7Xor8uuAW9W/KoWpB0foMiktZZR/u3pNHOnaC', NULL, 'fasd@gmail.com', NULL, NULL, NULL, NULL, 1513013150, NULL, 1, 'Bilal', 'akhtar', 'fasd', '1111222211', 0),
 (11, '::1', '111', '$2y$08$5FdMq.MaltWruddzcGqPRuZxbgmXcJBHl5K5nLZZJqx1kB.FBUtZG', NULL, 'bilalbs@admin.com', NULL, NULL, NULL, NULL, 1513013456, NULL, 1, 'Malik', 'Fsd', 'DSC Fsd', '999999999', 0),
-(12, '::1', 'sdfsdf', '$2y$08$zozL7ZbyC/YU7D2wr7h4JOc9bixvUxaZUzhXzfb2Yizk1jXVoi4O2', NULL, 'user111@admin.com', NULL, NULL, NULL, NULL, 1513013677, NULL, 1, 'Malik', 'Waris', 'DSC Fsd', '55555555555', 0),
+(12, '::1', 'sdfsdf', '$2y$08$cQ1lqztNVnGDwQUFhNqjB.3DdTnt9NvIKgS8S93z91AzKfJImMNuS', NULL, 'userfsd@admin.com', NULL, NULL, NULL, NULL, 1513013677, 1514396493, 1, 'Malik', 'Waris', 'DSC Fsd', '5555-5555555', 2),
 (13, '::1', '111aaa', '$2y$08$.6Y26DLAKBSQBbF/pGUa5e5okwi2Dd7D1xVnk8HZWQlCfeDMgjk9O', NULL, 'sdfsdf555@gmail.com', NULL, NULL, NULL, NULL, 1513013897, NULL, 1, 'sadfsadf', 'sadfsadf', 'sdfsdf', '555555554', 0),
 (14, '::1', '', '$2y$08$5RQla3U.TO6RXT8PMhfvPuuIx1m.6s4Q0I1alje1eeHGQ1Y7GvjY2', NULL, 'faisalabad1111@admin.com', NULL, NULL, NULL, NULL, 1513017648, NULL, 1, 'Bilal', 'Waris', 'DSC Fsd', '09999998888', 1),
 (15, '::1', 'ds170400054', '$2y$08$Z0ldKDRogI/r33R1L/86CunwWlrjyJWEJ7JHwuNxrxmCShALnNEce', NULL, 'user@admin111.com', NULL, NULL, NULL, NULL, 1513024357, NULL, 1, 'Malik', 'Waris', 'DSC Fsd', '8887777776', 0),
@@ -472,16 +484,11 @@ INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`
 -- Table structure for table `users_groups`
 --
 
-DROP TABLE IF EXISTS `users_groups`;
-CREATE TABLE IF NOT EXISTS `users_groups` (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users_groups` (
+  `id` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
-  `group_id` mediumint(8) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uc_users_groups` (`user_id`,`group_id`),
-  KEY `fk_users_groups_users1_idx` (`user_id`),
-  KEY `fk_users_groups_groups1_idx` (`group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+  `group_id` mediumint(8) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users_groups`
@@ -499,7 +506,7 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (21, 9, 2),
 (27, 10, 2),
 (26, 11, 2),
-(25, 12, 2),
+(57, 12, 2),
 (29, 13, 2),
 (50, 14, 2),
 (32, 15, 2),
@@ -516,6 +523,239 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (55, 27, 2);
 
 --
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admin_preferences`
+--
+ALTER TABLE `admin_preferences`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cases_type`
+--
+ALTER TABLE `cases_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cat_id` (`cat_id`),
+  ADD KEY `court_type_id` (`court_type_id`),
+  ADD KEY `case_type_id` (`case_type_id`);
+
+--
+-- Indexes for table `categories_monthly`
+--
+ALTER TABLE `categories_monthly`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cat_id` (`cat_id`),
+  ADD KEY `court_type_id` (`court_type_id`);
+
+--
+-- Indexes for table `categories_njp`
+--
+ALTER TABLE `categories_njp`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cat_id` (`cat_id`),
+  ADD KEY `court_type_id` (`court_type_id`);
+
+--
+-- Indexes for table `courts`
+--
+ALTER TABLE `courts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `judge_id` (`judge_id`),
+  ADD KEY `city_id` (`city_id`),
+  ADD KEY `court_type_id` (`court_type_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `courts_type`
+--
+ALTER TABLE `courts_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `designation`
+--
+ALTER TABLE `designation`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `districts`
+--
+ALTER TABLE `districts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `teh_id` (`teh_id`);
+
+--
+-- Indexes for table `groups`
+--
+ALTER TABLE `groups`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `header_information`
+--
+ALTER TABLE `header_information`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `parent_id` (`parent_id`);
+
+--
+-- Indexes for table `judges`
+--
+ALTER TABLE `judges`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `desgn_id` (`desgn_id`),
+  ADD KEY `city_id` (`city_id`);
+
+--
+-- Indexes for table `login_attempts`
+--
+ALTER TABLE `login_attempts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `public_preferences`
+--
+ALTER TABLE `public_preferences`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `report`
+--
+ALTER TABLE `report`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `court_id` (`court_id`,`category_id`,`type_id`),
+  ADD KEY `category_key` (`category_id`),
+  ADD KEY `heading_id` (`type_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users_groups`
+--
+ALTER TABLE `users_groups`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uc_users_groups` (`user_id`,`group_id`),
+  ADD KEY `fk_users_groups_users1_idx` (`user_id`),
+  ADD KEY `fk_users_groups_groups1_idx` (`group_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin_preferences`
+--
+ALTER TABLE `admin_preferences`
+  MODIFY `id` tinyint(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `cases_type`
+--
+ALTER TABLE `cases_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+
+--
+-- AUTO_INCREMENT for table `categories_monthly`
+--
+ALTER TABLE `categories_monthly`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `categories_njp`
+--
+ALTER TABLE `categories_njp`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `courts`
+--
+ALTER TABLE `courts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `courts_type`
+--
+ALTER TABLE `courts_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `designation`
+--
+ALTER TABLE `designation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `districts`
+--
+ALTER TABLE `districts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `groups`
+--
+ALTER TABLE `groups`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `header_information`
+--
+ALTER TABLE `header_information`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT for table `judges`
+--
+ALTER TABLE `judges`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `login_attempts`
+--
+ALTER TABLE `login_attempts`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `public_preferences`
+--
+ALTER TABLE `public_preferences`
+  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `report`
+--
+ALTER TABLE `report`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `users_groups`
+--
+ALTER TABLE `users_groups`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -526,6 +766,20 @@ ALTER TABLE `categories`
   ADD CONSTRAINT `categories_casest_fk` FOREIGN KEY (`case_type_id`) REFERENCES `cases_type` (`id`),
   ADD CONSTRAINT `categories_courtst_fk` FOREIGN KEY (`court_type_id`) REFERENCES `courts_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `category_id_fk` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `categories_monthly`
+--
+ALTER TABLE `categories_monthly`
+  ADD CONSTRAINT `categories_monthly_ibfk_1` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `categories_monthly_ibfk_2` FOREIGN KEY (`court_type_id`) REFERENCES `courts_type` (`id`);
+
+--
+-- Constraints for table `categories_njp`
+--
+ALTER TABLE `categories_njp`
+  ADD CONSTRAINT `categories_njp_ibfk_1` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `categories_njp_ibfk_2` FOREIGN KEY (`court_type_id`) REFERENCES `courts_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `courts`
@@ -569,6 +823,7 @@ ALTER TABLE `report`
 ALTER TABLE `users_groups`
   ADD CONSTRAINT `fk_users_groups_groups1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_users_groups_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

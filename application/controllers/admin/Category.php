@@ -39,10 +39,6 @@ class Category extends Admin_Controller {
         	$cat->sub_categories = $this->category_model->getCategoryForParentId($cat->id);
         }
         
-//                 echo '<pre>';
-//                 var_dump($this->data['categories']);
-//                 die();
-
 		/* Load Template */
 		$this->template->admin_render('admin/category/index', $this->data);
 	}
@@ -187,6 +183,215 @@ class Category extends Admin_Controller {
 				return true;
 			}
 		
+	}
+	
+	public function getCategoriesByCourtType()
+	{
+		$court_type_id = $this->input->post('court_type_id');
+		
+		$categories = $this->category_model->getCategoriesByCourtType($court_type_id);
+		
+		echo json_encode($categories);
+	}
+	
+	public function njp_categories()
+	{
+		// load js files in array
+		$this->data['js_files'] = array('/datatables.net/js/jquery.dataTables.min.js', '/datatables.net-bs/js/dataTables.bootstrap.min.js');
+		// load css files
+		$this->data['css_files'] = array('/datatables.net-bs/css/dataTables.bootstrap.min.css');
+		
+		/* Breadcrumbs */
+		$this->breadcrumbs->unshift(2, lang('menu_njp_cats'), 'admin/category/njp_categories');
+		$this->data['breadcrumb'] = $this->breadcrumbs->show();
+		
+		$this->data['sub_title'] = lang('menu_njp_cats');
+		
+		/* Data */
+		$this->data['categories'] = $this->category_model->getNJPCategories();
+		
+		/* Load Template */
+		$this->template->admin_render('admin/category/njp_categories', $this->data);
+	}
+	
+	Public function njp_category_add()
+	{
+		// Breadcrumbs
+		$this->breadcrumbs->unshift(2, lang('menu_njp_cat_add'), 'admin/category/njp_categories_add');
+		$this->data['breadcrumb'] = $this->breadcrumbs->show();
+	
+		$this->data['sub_title'] = lang('menu_njp_cat_add');
+	
+		// load js files in array
+		$this->data['custom_js'] = array('/select2/js/select2.full.min.js', '/bootstrap-validator/validator.min.js');
+		// load css files
+		$this->data['css_files'] = array('/select2/css/select2.min.css');
+	
+		$this->template->admin_render('admin/category/add_njp_cat', $this->data);
+	}
+	
+	public function njp_category_edit($id = null)
+	{
+		$this->data['item'] = $this->category_model->getCategoryNJPForEdit($id);
+	
+		if ( !$id OR empty($this->data['item']) )
+		{
+			$this->session->set_flashdata('message','This record not found!');
+			$this->session->set_flashdata('message_type','warning');
+			redirect('admin/njp_categories', 'refresh');
+		}
+		else
+		{
+			/* Breadcrumbs */
+			$this->breadcrumbs->unshift(2, lang('menu_njp_cat_edit'), 'admin/category/njp_category_edit');
+			$this->data['breadcrumb'] = $this->breadcrumbs->show();
+				
+			$this->data['sub_title'] = lang('menu_njp_cat_edit');
+				
+			// load js files in array
+			$this->data['custom_js'] = array('/select2/js/select2.full.min.js', '/bootstrap-validator/validator.min.js');
+			// load css files
+			$this->data['css_files'] = array('/select2/css/select2.min.css');
+				
+			/* Load Template */
+			$this->template->admin_render('admin/category/add_njp_cat', $this->data);
+		}
+	}
+	
+	public function njp_category_save()
+	{
+		$data = array(
+				'id'			=> strip_tags(trim($this->input->post('id',TRUE))),
+				'cat_name' 		=> strip_tags(trim($this->input->post('cat_name', TRUE))),
+				'court_type_id'	=> strip_tags(trim($this->input->post('court_type_id', TRUE))),
+				'cat_id'		=> strip_tags(trim($this->input->post('cat_id', TRUE))),
+				'sorting'		=> strip_tags(trim($this->input->post('sorting', TRUE))),				
+		);
+		
+		$this->form_validation->set_rules('cat_name', 'category name', 'required');
+		
+		if ($this->form_validation->run() == FALSE )
+		{
+			$this->session->set_flashdata('message','Please fill below fields!');
+			$this->session->set_flashdata('message_type','warning');
+				
+			redirect('admin/category/njp_category_add');
+		}
+		else 
+		{
+			if($this->category_model->njp_categories_save($data) > 0)
+			{
+				$this->session->set_flashdata('message','The category have saved!');
+				$this->session->set_flashdata('message_type','success');
+			}
+			else
+			{
+				$this->session->set_flashdata('message','The category could not be saved!');
+				$this->session->set_flashdata('message_type','warning');
+			}
+				
+			redirect('admin/category/njp_category_add');	
+		}
+	}
+	
+	public function monthly_categories()
+	{
+		// load js files in array
+		$this->data['js_files'] = array('/datatables.net/js/jquery.dataTables.min.js', '/datatables.net-bs/js/dataTables.bootstrap.min.js');
+		// load css files
+		$this->data['css_files'] = array('/datatables.net-bs/css/dataTables.bootstrap.min.css');
+	
+		/* Breadcrumbs */
+		$this->breadcrumbs->unshift(2, lang('menu_monthly_cats'), 'admin/category/monthly_categories');
+		$this->data['breadcrumb'] = $this->breadcrumbs->show();
+	
+		$this->data['sub_title'] = lang('menu_monthly_cats');
+	
+		/* Data */
+		$this->data['categories'] = $this->category_model->getMonthlyCategories();
+	
+		/* Load Template */
+		$this->template->admin_render('admin/category/monthly_categories', $this->data);
+	}
+	
+	Public function monthly_category_add()
+	{
+		// Breadcrumbs
+		$this->breadcrumbs->unshift(2, lang('menu_monthly_cat_add'), 'admin/category/monthly_category_add');
+		$this->data['breadcrumb'] = $this->breadcrumbs->show();
+	
+		$this->data['sub_title'] = lang('menu_monthly_cat_add');
+	
+		// load js files in array
+		$this->data['custom_js'] = array('/select2/js/select2.full.min.js', '/bootstrap-validator/validator.min.js');
+		// load css files
+		$this->data['css_files'] = array('/select2/css/select2.min.css');
+	
+		$this->template->admin_render('admin/category/add_monthly_cat', $this->data);
+	}
+	
+	public function monthly_category_edit($id = null)
+	{
+		$this->data['item'] = $this->category_model->getCategoryNJPForEdit($id);
+	
+		if ( !$id OR empty($this->data['item']) )
+		{
+			$this->session->set_flashdata('message','This record not found!');
+			$this->session->set_flashdata('message_type','warning');
+			redirect('admin/monthly_categories', 'refresh');
+		}
+		else
+		{
+			/* Breadcrumbs */
+			$this->breadcrumbs->unshift(2, lang('menu_monthly_cat_edit'), 'admin/category/monthly_category_edit');
+			$this->data['breadcrumb'] = $this->breadcrumbs->show();
+	
+			$this->data['sub_title'] = lang('menu_monthly_cat_edit');
+	
+			// load js files in array
+			$this->data['custom_js'] = array('/select2/js/select2.full.min.js', '/bootstrap-validator/validator.min.js');
+			// load css files
+			$this->data['css_files'] = array('/select2/css/select2.min.css');
+	
+			/* Load Template */
+			$this->template->admin_render('admin/category/add_monthly_cat', $this->data);
+		}
+	}
+	
+	public function monthly_category_save()
+	{
+		$data = array(
+				'id'			=> strip_tags(trim($this->input->post('id',TRUE))),
+				'cat_name' 		=> strip_tags(trim($this->input->post('cat_name', TRUE))),
+				'court_type_id'	=> strip_tags(trim($this->input->post('court_type_id', TRUE))),
+				'cat_id'		=> strip_tags(trim($this->input->post('cat_id', TRUE))),
+				'sorting'		=> strip_tags(trim($this->input->post('sorting', TRUE))),
+		);
+	
+		$this->form_validation->set_rules('cat_name', 'category name', 'required');
+	
+		if ($this->form_validation->run() == FALSE )
+		{
+			$this->session->set_flashdata('message','Please fill below fields!');
+			$this->session->set_flashdata('message_type','warning');
+	
+			redirect('admin/category/monthly_category_add');
+		}
+		else
+		{
+			if($this->category_model->monthly_categories_save($data) > 0)
+			{
+				$this->session->set_flashdata('message','The category have saved!');
+				$this->session->set_flashdata('message_type','success');
+			}
+			else
+			{
+				$this->session->set_flashdata('message','The category could not be saved!');
+				$this->session->set_flashdata('message_type','warning');
+			}
+	
+			redirect('admin/category/monthly_category_add');
+		}
 	}
 	
 }
